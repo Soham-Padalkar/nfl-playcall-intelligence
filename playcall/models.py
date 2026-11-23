@@ -470,6 +470,33 @@ def _tactical_distributions(sample):
     return distributions
 
 
+def _usage_distributions(opening, offense):
+    """Estimate usage conditional on a named carrier or target in the latest team drives."""
+    team = opening.loc[opening["posteam"].eq(offense)]
+    if team.empty:
+        return {}
+    team = team.loc[team["season"].eq(team["season"].max())]
+    game_ids = team.sort_values("game_date")["game_id"].drop_duplicates().tail(5)
+    recent = team.loc[team["game_id"].isin(game_ids)]
+    result = {}
+    for column, call, role in (
+        ("receiver_player_name", "pass", "Named target on a pass"),
+        ("rusher_player_name", "run", "Named ball carrier on a run"),
+    ):
+        if column not in recent:
+            continue
+        opportunities = recent.loc[recent["call"].eq(call)]
+        names = opportunities[column].dropna()
+        if len(names) >= 5:
+            result[column] = {
+                "label": f"{role} · {offense}, latest {len(game_ids)} opening drives",
+                "n": len(names),
+                "coverage": len(names) / len(opportunities),
+                "probabilities": names.value_counts(normalize=True).to_dict(),
+            }
+    return result
+
+
 class PlaycallModels:
     def __init__(self, rates, ml, opening, calibrator, report, context):
         self.rates = rates
@@ -555,7 +582,7 @@ class PlaycallModels:
             )
             interval = [float(midpoint - radius), float(midpoint + radius)]
         probability.update(
-            tactical=_tactical_distributions(sample),
+            tactical=_tactical_distributions(sample) | _usage_distributions(self.opening, frame.iloc[0]["posteam"]),
             uncertainty={
                 "n": n,
                 "basis": basis,
