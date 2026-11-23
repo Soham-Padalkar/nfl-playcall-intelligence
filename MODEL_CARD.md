@@ -1,0 +1,47 @@
+# Opening-drive model card
+
+The production target is the offensive choice between a run and a dropback on an eligible opening-drive scrimmage play. The population includes both offenses in regular-season and playoff games present in the dataset. The model can support scenario exploration by an analyst. It has no validation for prediction of an exact playbook call or personnel substitution.
+
+## Evaluation
+
+| Split | NFL seasons | Opening-drive decisions | Games |
+| --- | --- | ---: | ---: |
+| Fit | 2022–23 | 7,256 | 569 |
+| Validation | 2024 | 3,556 | 285 |
+| Held-out test | 2025–26 through November 22 | 5,700 | 447 |
+
+The team used the validation period for candidate selection, sigmoid calibration and the analogue weight. The selected tabular model is XGBoost. The production fit then uses historical data through the forecast cutoff. The held-out metrics refer to the earlier evaluation fit. Data from earlier games can include later publisher corrections.
+
+| Candidate | Test log loss | Test Brier |
+| --- | ---: | ---: |
+| League frequency | 0.6852 | 0.2460 |
+| Situational frequency | 0.6004 | 0.2100 |
+| Three-component matchup ensemble | 0.6013 | 0.2102 |
+| Random forest | 0.5997 | 0.2082 |
+| XGBoost | **0.5838** | **0.2023** |
+
+XGBoost correctly classified 66.93% of the eligible plays. On 124 Atlanta test plays it achieved 66.13% accuracy, 0.5736 log loss and a 0.2004 Brier score. These Atlanta observations span different playcallers. The test measures later decisions after the analyst knows the actual prior state. It does not measure joint accuracy for a complete frozen drive tree. Top-two accuracy adds no information for two classes.
+
+## Matchup evidence
+
+A uses verified caller intervals against Flores in Minnesota. The current matchup has zero previous qualifying games. B compares defensive profiles and shrinks a caller-specific or team-level rate toward situational evidence. C uses recent offense and defense decisions. D combines A, B and C with sample-size-aware weights. Validation gave B zero weight. XGBoost won model selection independently of D. The dashboard exposes D for comparison.
+
+In a separate experiment with common training games, Model B had 0.60254 log loss using play-by-play profiles and 0.60317 with added charting. Feature permutation in the selected tabular model increased log loss most for down (0.1833) and distance (0.1070). Permutation measures predictive dependence and does not establish causation.
+
+## Interpretation
+
+- Tactical probabilities use observed historical labels where available and show their support. Snap depth, routes, coverages and targets can be incomplete. No validated detector recovers the full play from broadcast footage.
+- The reported interval describes the empirical pass rate in the reference sample. It is not a confidence interval for an individual model score.
+- The simulation enumerates possible plays and empirical outcomes. An exact-yardage beam can discard most path mass by depth three. Use the reported retained mass to interpret the displayed branches.
+- Injuries, projected starters and inactive lists are context. Their effects have no validated predictive coefficients.
+- No target-game accuracy exists before kickoff. The postgame evaluation requires the actual sequence and its saved pregame or adaptive forecast.
+
+Named target and carrier shares use the offense’s latest five opening drives in its most recent season and require five labeled examples. They describe usage conditional on a recorded name. Injuries and substitutions can change who is available.
+
+The optional GPU MLP scored 0.6270 log loss and the GRU scored 0.6296 on the same 5,700 eligible decisions. Neither surpassed the production tabular model. The [neural experiment](docs/neural-results.json) also reports first-play scores.
+
+## Frozen Atlanta replay
+
+A separate XGBoost fit through 2024 used identity calibration and the actual initial field position, down, score and clock. It generated two decisions before seeing any outcomes. Across 27 Atlanta opening drives, it predicted the first call correctly on 15 drives (55.6%). The position-specific league baseline predicted 18 correctly (66.7%). First-call log loss was 0.7015 for XGBoost and 0.6853 for the baseline.
+
+On 26 drives with a second eligible play, the frozen second-call estimate had 0.7051 log loss. The league baseline had 0.7049. The width-eight beam retained the observed two-call sequence in 16 drives and both calls with their exact gains and turnover status in three. Average retained mass after two plays was 11.25%. These samples give no evidence of a matchup-specific advantage on Atlanta's first two calls. [Reproduce the replay](docs/replay-results.json)

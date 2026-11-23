@@ -16,3 +16,5 @@ The refresh uses public releases from the nflverse project. Each local sidecar r
 The MIT license covers this project's code. The data, pretrained weights, team publications and footage retain their own terms. Consult the [nflverse data repository](https://github.com/nflverse/nflverse-data) and the individual source release before redistribution. The public repository contains no game footage or raw datasets.
 
 The video smoke check used AFN Naples footage by U.S. Navy Petty Officer 2nd Class Chance Hanson. The public-domain source is documented on [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:AFN_Naples_TV_Spot_-_Army_vs_Navy_Game_(1028703).webm). This clip checks decoding and inference. It supplies no tactical training labels.
+
+Player roster changes are checked against [nflverse annual rosters](https://github.com/nflverse/nflverse-data/releases/tag/rosters).
