@@ -1,0 +1,979 @@
+{
+  "atlanta_selected_metrics": {
+    "accuracy": 0.6612903225806451,
+    "brier": 0.20036950707435608,
+    "calibration_error": 0.09367343681233545,
+    "drive_pass_share_mae": 0.235402614095504,
+    "log_loss": 0.5736027956008911,
+    "n": 124,
+    "reliability": [
+      {
+        "bin": 1,
+        "n": 1,
+        "observed_pass": 1.0,
+        "predicted_pass": 0.12360843271017075
+      },
+      {
+        "bin": 2,
+        "n": 5,
+        "observed_pass": 0.0,
+        "predicted_pass": 0.241716668009758
+      },
+      {
+        "bin": 3,
+        "n": 7,
+        "observed_pass": 0.14285714285714285,
+        "predicted_pass": 0.3661159574985504
+      },
+      {
+        "bin": 4,
+        "n": 45,
+        "observed_pass": 0.4,
+        "predicted_pass": 0.44970715045928955
+      },
+      {
+        "bin": 5,
+        "n": 22,
+        "observed_pass": 0.36363636363636365,
+        "predicted_pass": 0.5542895793914795
+      },
+      {
+        "bin": 6,
+        "n": 17,
+        "observed_pass": 0.6470588235294118,
+        "predicted_pass": 0.6426434516906738
+      },
+      {
+        "bin": 7,
+        "n": 3,
+        "observed_pass": 0.6666666666666666,
+        "predicted_pass": 0.7127032279968262
+      },
+      {
+        "bin": 8,
+        "n": 6,
+        "observed_pass": 0.8333333333333334,
+        "predicted_pass": 0.8767005801200867
+      },
+      {
+        "bin": 9,
+        "n": 18,
+        "observed_pass": 1.0,
+        "predicted_pass": 0.9409359693527222
+      }
+    ],
+    "top2_accuracy": 1.0
+  },
+  "dataset_version": "4626820e59837767",
+  "ensemble_analog_weight": 0.0,
+  "feature_importance": [
+    {
+      "feature": "down",
+      "log_loss_increase": 0.183291494846344
+    },
+    {
+      "feature": "ydstogo",
+      "log_loss_increase": 0.1070158878962199
+    },
+    {
+      "feature": "previous_call",
+      "log_loss_increase": 0.01436158021291097
+    },
+    {
+      "feature": "yardline_100",
+      "log_loss_increase": 0.007312575976053874
+    },
+    {
+      "feature": "game_seconds_remaining",
+      "log_loss_increase": 0.0021892786026000977
+    },
+    {
+      "feature": "posteam",
+      "log_loss_increase": 0.0007440845171610514
+    },
+    {
+      "feature": "defteam",
+      "log_loss_increase": 0.000535289446512858
+    },
+    {
+      "feature": "is_home",
+      "log_loss_increase": 0.0001357595125834147
+    },
+    {
+      "feature": "caller",
+      "log_loss_increase": 0.0
+    },
+    {
+      "feature": "score_differential",
+      "log_loss_increase": -0.0001656015714009603
+    },
+    {
+      "feature": "defense_rest",
+      "log_loss_increase": -0.00017468134562174478
+    },
+    {
+      "feature": "offense_rest",
+      "log_loss_increase": -0.0001903374989827474
+    }
+  ],
+  "generated_at": "2026-11-23T08:34:18.550783+00:00",
+  "git_commit": "732f55569816f723e4e089131bf00ae3e2af2123",
+  "metrics": {
+    "A": {
+      "accuracy": 0.6414035087719299,
+      "brier": 0.21022413797351108,
+      "calibration": "sigmoid",
+      "calibration_error": 0.025217016776373585,
+      "drive_pass_share_mae": 0.14460765969211062,
+      "log_loss": 0.6012793387491826,
+      "n": 5700,
+      "raw_log_loss": 0.6033568737289602,
+      "reliability": [
+        {
+          "bin": 2,
+          "n": 50,
+          "observed_pass": 0.32,
+          "predicted_pass": 0.2835159145141015
+        },
+        {
+          "bin": 3,
+          "n": 705,
+          "observed_pass": 0.3730496453900709,
+          "predicted_pass": 0.36244320382298134
+        },
+        {
+          "bin": 4,
+          "n": 1750,
+          "observed_pass": 0.42857142857142855,
+          "predicted_pass": 0.45639222200154256
+        },
+        {
+          "bin": 5,
+          "n": 1445,
+          "observed_pass": 0.5176470588235295,
+          "predicted_pass": 0.5415422255578883
+        },
+        {
+          "bin": 6,
+          "n": 520,
+          "observed_pass": 0.65,
+          "predicted_pass": 0.6369735591741952
+        },
+        {
+          "bin": 7,
+          "n": 362,
+          "observed_pass": 0.8066298342541437,
+          "predicted_pass": 0.7558415134480617
+        },
+        {
+          "bin": 8,
+          "n": 470,
+          "observed_pass": 0.8787234042553191,
+          "predicted_pass": 0.8501357504877962
+        },
+        {
+          "bin": 9,
+          "n": 398,
+          "observed_pass": 0.9773869346733668,
+          "predicted_pass": 0.9456657613556977
+        }
+      ],
+      "top2_accuracy": 1.0,
+      "validation_log_loss": 0.6153276882914146
+    },
+    "B": {
+      "accuracy": 0.6442105263157895,
+      "brier": 0.21037549972226405,
+      "calibration": "sigmoid",
+      "calibration_error": 0.02285444944058474,
+      "drive_pass_share_mae": 0.14482850757581162,
+      "log_loss": 0.6017463577489844,
+      "n": 5700,
+      "raw_log_loss": 0.6033960548822157,
+      "reliability": [
+        {
+          "bin": 2,
+          "n": 50,
+          "observed_pass": 0.36,
+          "predicted_pass": 0.2842008309971133
+        },
+        {
+          "bin": 3,
+          "n": 719,
+          "observed_pass": 0.36022253129346316,
+          "predicted_pass": 0.3625321018174666
+        },
+        {
+          "bin": 4,
+          "n": 1760,
+          "observed_pass": 0.42954545454545456,
+          "predicted_pass": 0.4560904867666835
+        },
+        {
+          "bin": 5,
+          "n": 1410,
+          "observed_pass": 0.524113475177305,
+          "predicted_pass": 0.5426757063896983
+        },
+        {
+          "bin": 6,
+          "n": 538,
+          "observed_pass": 0.6431226765799256,
+          "predicted_pass": 0.6395808500777419
+        },
+        {
+          "bin": 7,
+          "n": 359,
+          "observed_pass": 0.8133704735376045,
+          "predicted_pass": 0.7538927808716896
+        },
+        {
+          "bin": 8,
+          "n": 492,
+          "observed_pass": 0.8841463414634146,
+          "predicted_pass": 0.8500207014996943
+        },
+        {
+          "bin": 9,
+          "n": 372,
+          "observed_pass": 0.978494623655914,
+          "predicted_pass": 0.9465591122360106
+        }
+      ],
+      "top2_accuracy": 1.0,
+      "validation_log_loss": 0.616224219553942
+    },
+    "C": {
+      "accuracy": 0.6414035087719299,
+      "brier": 0.21022413797351108,
+      "calibration": "sigmoid",
+      "calibration_error": 0.025217016776373585,
+      "drive_pass_share_mae": 0.1446076596921106,
+      "log_loss": 0.6012793387491825,
+      "n": 5700,
+      "raw_log_loss": 0.6033568737289602,
+      "reliability": [
+        {
+          "bin": 2,
+          "n": 50,
+          "observed_pass": 0.32,
+          "predicted_pass": 0.2835159145141015
+        },
+        {
+          "bin": 3,
+          "n": 705,
+          "observed_pass": 0.3730496453900709,
+          "predicted_pass": 0.36244320382298134
+        },
+        {
+          "bin": 4,
+          "n": 1750,
+          "observed_pass": 0.42857142857142855,
+          "predicted_pass": 0.45639222200154256
+        },
+        {
+          "bin": 5,
+          "n": 1445,
+          "observed_pass": 0.5176470588235295,
+          "predicted_pass": 0.5415422255578883
+        },
+        {
+          "bin": 6,
+          "n": 520,
+          "observed_pass": 0.65,
+          "predicted_pass": 0.6369735591741952
+        },
+        {
+          "bin": 7,
+          "n": 362,
+          "observed_pass": 0.8066298342541437,
+          "predicted_pass": 0.7558415134480617
+        },
+        {
+          "bin": 8,
+          "n": 470,
+          "observed_pass": 0.8787234042553191,
+          "predicted_pass": 0.8501357504877962
+        },
+        {
+          "bin": 9,
+          "n": 398,
+          "observed_pass": 0.9773869346733668,
+          "predicted_pass": 0.9456657613556977
+        }
+      ],
+      "top2_accuracy": 1.0,
+      "validation_log_loss": 0.6153276882914146
+    },
+    "ensemble": {
+      "accuracy": 0.6414035087719299,
+      "brier": 0.21022413797351108,
+      "calibration": "sigmoid",
+      "calibration_error": 0.025217016776373585,
+      "drive_pass_share_mae": 0.1446076596921106,
+      "log_loss": 0.6012793387491825,
+      "n": 5700,
+      "raw_log_loss": 0.6033568737289602,
+      "reliability": [
+        {
+          "bin": 2,
+          "n": 50,
+          "observed_pass": 0.32,
+          "predicted_pass": 0.2835159145141015
+        },
+        {
+          "bin": 3,
+          "n": 705,
+          "observed_pass": 0.3730496453900709,
+          "predicted_pass": 0.36244320382298134
+        },
+        {
+          "bin": 4,
+          "n": 1750,
+          "observed_pass": 0.42857142857142855,
+          "predicted_pass": 0.45639222200154256
+        },
+        {
+          "bin": 5,
+          "n": 1445,
+          "observed_pass": 0.5176470588235295,
+          "predicted_pass": 0.5415422255578883
+        },
+        {
+          "bin": 6,
+          "n": 520,
+          "observed_pass": 0.65,
+          "predicted_pass": 0.6369735591741952
+        },
+        {
+          "bin": 7,
+          "n": 362,
+          "observed_pass": 0.8066298342541437,
+          "predicted_pass": 0.7558415134480617
+        },
+        {
+          "bin": 8,
+          "n": 470,
+          "observed_pass": 0.8787234042553191,
+          "predicted_pass": 0.8501357504877962
+        },
+        {
+          "bin": 9,
+          "n": 398,
+          "observed_pass": 0.9773869346733668,
+          "predicted_pass": 0.9456657613556977
+        }
+      ],
+      "top2_accuracy": 1.0,
+      "validation_log_loss": 0.6153276882914146
+    },
+    "ensemble_without_similarity": {
+      "accuracy": 0.6414035087719299,
+      "brier": 0.21022413797351108,
+      "calibration": "sigmoid",
+      "calibration_error": 0.025217016776373585,
+      "drive_pass_share_mae": 0.1446076596921106,
+      "log_loss": 0.6012793387491825,
+      "n": 5700,
+      "raw_log_loss": 0.6033568737289602,
+      "reliability": [
+        {
+          "bin": 2,
+          "n": 50,
+          "observed_pass": 0.32,
+          "predicted_pass": 0.2835159145141015
+        },
+        {
+          "bin": 3,
+          "n": 705,
+          "observed_pass": 0.3730496453900709,
+          "predicted_pass": 0.36244320382298134
+        },
+        {
+          "bin": 4,
+          "n": 1750,
+          "observed_pass": 0.42857142857142855,
+          "predicted_pass": 0.45639222200154256
+        },
+        {
+          "bin": 5,
+          "n": 1445,
+          "observed_pass": 0.5176470588235295,
+          "predicted_pass": 0.5415422255578883
+        },
+        {
+          "bin": 6,
+          "n": 520,
+          "observed_pass": 0.65,
+          "predicted_pass": 0.6369735591741952
+        },
+        {
+          "bin": 7,
+          "n": 362,
+          "observed_pass": 0.8066298342541437,
+          "predicted_pass": 0.7558415134480617
+        },
+        {
+          "bin": 8,
+          "n": 470,
+          "observed_pass": 0.8787234042553191,
+          "predicted_pass": 0.8501357504877962
+        },
+        {
+          "bin": 9,
+          "n": 398,
+          "observed_pass": 0.9773869346733668,
+          "predicted_pass": 0.9456657613556977
+        }
+      ],
+      "top2_accuracy": 1.0,
+      "validation_log_loss": 0.6153276882914146
+    },
+    "historical_caller": {
+      "accuracy": 0.6385964912280702,
+      "brier": 0.20996797154246308,
+      "calibration": "sigmoid",
+      "calibration_error": 0.01839856479300403,
+      "drive_pass_share_mae": 0.14397209087462814,
+      "log_loss": 0.6003779731330615,
+      "n": 5700,
+      "raw_log_loss": 0.6040031669811788,
+      "reliability": [
+        {
+          "bin": 2,
+          "n": 95,
+          "observed_pass": 0.29473684210526313,
+          "predicted_pass": 0.29023029137626905
+        },
+        {
+          "bin": 3,
+          "n": 517,
+          "observed_pass": 0.32688588007736946,
+          "predicted_pass": 0.3575511080923702
+        },
+        {
+          "bin": 4,
+          "n": 2327,
+          "observed_pass": 0.45423291792006876,
+          "predicted_pass": 0.4626498020347378
+        },
+        {
+          "bin": 5,
+          "n": 606,
+          "observed_pass": 0.47029702970297027,
+          "predicted_pass": 0.520994145574384
+        },
+        {
+          "bin": 6,
+          "n": 983,
+          "observed_pass": 0.6236012207527976,
+          "predicted_pass": 0.6237353187904805
+        },
+        {
+          "bin": 7,
+          "n": 285,
+          "observed_pass": 0.8456140350877193,
+          "predicted_pass": 0.7757790247797487
+        },
+        {
+          "bin": 8,
+          "n": 446,
+          "observed_pass": 0.8699551569506726,
+          "predicted_pass": 0.8523834378166097
+        },
+        {
+          "bin": 9,
+          "n": 441,
+          "observed_pass": 0.9705215419501134,
+          "predicted_pass": 0.9469173480235928
+        }
+      ],
+      "top2_accuracy": 1.0,
+      "validation_log_loss": 0.6127448495209472
+    },
+    "league": {
+      "accuracy": 0.5629824561403509,
+      "brier": 0.246034474164112,
+      "calibration": "sigmoid",
+      "calibration_error": 0.0011242533447773928,
+      "drive_pass_share_mae": 0.1586535153255244,
+      "log_loss": 0.6851950557725017,
+      "n": 5700,
+      "raw_log_loss": 0.6864134186045435,
+      "reliability": [
+        {
+          "bin": 5,
+          "n": 5700,
+          "observed_pass": 0.5629824561403509,
+          "predicted_pass": 0.5641067094851283
+        }
+      ],
+      "top2_accuracy": 1.0,
+      "validation_log_loss": 0.6849025219833567
+    },
+    "logistic": {
+      "accuracy": 0.6321052631578947,
+      "brier": 0.21955138063433377,
+      "calibration": "sigmoid",
+      "calibration_error": 0.03278574506233126,
+      "drive_pass_share_mae": 0.16275389520478117,
+      "log_loss": 0.6288359075824943,
+      "n": 5700,
+      "raw_log_loss": 0.6324703219447729,
+      "reliability": [
+        {
+          "bin": 1,
+          "n": 38,
+          "observed_pass": 0.3157894736842105,
+          "predicted_pass": 0.16933894741153252
+        },
+        {
+          "bin": 2,
+          "n": 100,
+          "observed_pass": 0.38,
+          "predicted_pass": 0.2663426261019702
+        },
+        {
+          "bin": 3,
+          "n": 590,
+          "observed_pass": 0.35084745762711866,
+          "predicted_pass": 0.36354879562859616
+        },
+        {
+          "bin": 4,
+          "n": 1488,
+          "observed_pass": 0.43951612903225806,
+          "predicted_pass": 0.45282047206229914
+        },
+        {
+          "bin": 5,
+          "n": 1307,
+          "observed_pass": 0.5042081101759756,
+          "predicted_pass": 0.5478345782997792
+        },
+        {
+          "bin": 6,
+          "n": 1070,
+          "observed_pass": 0.6598130841121496,
+          "predicted_pass": 0.6465769773113647
+        },
+        {
+          "bin": 7,
+          "n": 697,
+          "observed_pass": 0.8149210903873745,
+          "predicted_pass": 0.7466706383217917
+        },
+        {
+          "bin": 8,
+          "n": 338,
+          "observed_pass": 0.8964497041420119,
+          "predicted_pass": 0.8412950389631729
+        },
+        {
+          "bin": 9,
+          "n": 72,
+          "observed_pass": 0.8611111111111112,
+          "predicted_pass": 0.9341939942047309
+        }
+      ],
+      "top2_accuracy": 1.0,
+      "validation_log_loss": 0.6353088916356648
+    },
+    "logistic_situation": {
+      "accuracy": 0.6301754385964913,
+      "brier": 0.2186661350926533,
+      "calibration": "sigmoid",
+      "calibration_error": 0.036515040966722395,
+      "drive_pass_share_mae": 0.1465365716593014,
+      "log_loss": 0.6270304721225282,
+      "n": 5700,
+      "raw_log_loss": 0.6277680670887837,
+      "reliability": [
+        {
+          "bin": 1,
+          "n": 33,
+          "observed_pass": 0.45454545454545453,
+          "predicted_pass": 0.17128772307676174
+        },
+        {
+          "bin": 2,
+          "n": 71,
+          "observed_pass": 0.2535211267605634,
+          "predicted_pass": 0.2534102067886856
+        },
+        {
+          "bin": 3,
+          "n": 224,
+          "observed_pass": 0.27232142857142855,
+          "predicted_pass": 0.35890638320557394
+        },
+        {
+          "bin": 4,
+          "n": 2409,
+          "observed_pass": 0.44956413449564137,
+          "predicted_pass": 0.46235267118195633
+        },
+        {
+          "bin": 5,
+          "n": 829,
+          "observed_pass": 0.48492159227985526,
+          "predicted_pass": 0.5491506998018898
+        },
+        {
+          "bin": 6,
+          "n": 1005,
+          "observed_pass": 0.6746268656716418,
+          "predicted_pass": 0.6513492111492482
+        },
+        {
+          "bin": 7,
+          "n": 671,
+          "observed_pass": 0.8047690014903129,
+          "predicted_pass": 0.7493329869338842
+        },
+        {
+          "bin": 8,
+          "n": 369,
+          "observed_pass": 0.9132791327913279,
+          "predicted_pass": 0.8421736921875969
+        },
+        {
+          "bin": 9,
+          "n": 89,
+          "observed_pass": 0.8426966292134831,
+          "predicted_pass": 0.9382280006466684
+        }
+      ],
+      "top2_accuracy": 1.0,
+      "validation_log_loss": 0.6350825723395893
+    },
+    "random_forest": {
+      "accuracy": 0.6652631578947369,
+      "brier": 0.2081934220819854,
+      "calibration": "sigmoid",
+      "calibration_error": 0.02665173364938217,
+      "drive_pass_share_mae": 0.16482245309264237,
+      "log_loss": 0.599735356409271,
+      "n": 5700,
+      "raw_log_loss": 0.6163604368483858,
+      "reliability": [
+        {
+          "bin": 1,
+          "n": 38,
+          "observed_pass": 0.34210526315789475,
+          "predicted_pass": 0.161269069850943
+        },
+        {
+          "bin": 2,
+          "n": 130,
+          "observed_pass": 0.23846153846153847,
+          "predicted_pass": 0.26394500009026056
+        },
+        {
+          "bin": 3,
+          "n": 1240,
+          "observed_pass": 0.3943548387096774,
+          "predicted_pass": 0.37062700937499043
+        },
+        {
+          "bin": 4,
+          "n": 1339,
+          "observed_pass": 0.4100074682598954,
+          "predicted_pass": 0.4368467623529897
+        },
+        {
+          "bin": 5,
+          "n": 603,
+          "observed_pass": 0.5456053067993366,
+          "predicted_pass": 0.5556480759737908
+        },
+        {
+          "bin": 6,
+          "n": 881,
+          "observed_pass": 0.6276958002270148,
+          "predicted_pass": 0.6549944381339
+        },
+        {
+          "bin": 7,
+          "n": 446,
+          "observed_pass": 0.7242152466367713,
+          "predicted_pass": 0.7438156745784672
+        },
+        {
+          "bin": 8,
+          "n": 882,
+          "observed_pass": 0.8934240362811792,
+          "predicted_pass": 0.8568850063563572
+        },
+        {
+          "bin": 9,
+          "n": 141,
+          "observed_pass": 0.950354609929078,
+          "predicted_pass": 0.912802636776141
+        }
+      ],
+      "top2_accuracy": 1.0,
+      "validation_log_loss": 0.6066047869200515
+    },
+    "recent_offense": {
+      "accuracy": 0.6324561403508772,
+      "brier": 0.21061954316826334,
+      "calibration": "sigmoid",
+      "calibration_error": 0.023277430623555282,
+      "drive_pass_share_mae": 0.14441289237809532,
+      "log_loss": 0.6019537124345393,
+      "n": 5700,
+      "raw_log_loss": 0.6042351643925292,
+      "reliability": [
+        {
+          "bin": 2,
+          "n": 57,
+          "observed_pass": 0.3157894736842105,
+          "predicted_pass": 0.28448414617847656
+        },
+        {
+          "bin": 3,
+          "n": 725,
+          "observed_pass": 0.36689655172413793,
+          "predicted_pass": 0.3615644437429415
+        },
+        {
+          "bin": 4,
+          "n": 1686,
+          "observed_pass": 0.4460260972716489,
+          "predicted_pass": 0.4569395868344647
+        },
+        {
+          "bin": 5,
+          "n": 1464,
+          "observed_pass": 0.49863387978142076,
+          "predicted_pass": 0.5395391920353527
+        },
+        {
+          "bin": 6,
+          "n": 529,
+          "observed_pass": 0.6427221172022685,
+          "predicted_pass": 0.636345376222042
+        },
+        {
+          "bin": 7,
+          "n": 376,
+          "observed_pass": 0.8138297872340425,
+          "predicted_pass": 0.7567122124609461
+        },
+        {
+          "bin": 8,
+          "n": 475,
+          "observed_pass": 0.88,
+          "predicted_pass": 0.8533222993378199
+        },
+        {
+          "bin": 9,
+          "n": 388,
+          "observed_pass": 0.9768041237113402,
+          "predicted_pass": 0.9478756697174034
+        }
+      ],
+      "top2_accuracy": 1.0,
+      "validation_log_loss": 0.6146724410549187
+    },
+    "situational": {
+      "accuracy": 0.6385964912280702,
+      "brier": 0.20996797154246308,
+      "calibration": "sigmoid",
+      "calibration_error": 0.018398564793004023,
+      "drive_pass_share_mae": 0.14397209087462814,
+      "log_loss": 0.6003779731330615,
+      "n": 5700,
+      "raw_log_loss": 0.6040031669811788,
+      "reliability": [
+        {
+          "bin": 2,
+          "n": 95,
+          "observed_pass": 0.29473684210526313,
+          "predicted_pass": 0.29023029137626905
+        },
+        {
+          "bin": 3,
+          "n": 517,
+          "observed_pass": 0.32688588007736946,
+          "predicted_pass": 0.3575511080923702
+        },
+        {
+          "bin": 4,
+          "n": 2327,
+          "observed_pass": 0.45423291792006876,
+          "predicted_pass": 0.4626498020347378
+        },
+        {
+          "bin": 5,
+          "n": 606,
+          "observed_pass": 0.47029702970297027,
+          "predicted_pass": 0.520994145574384
+        },
+        {
+          "bin": 6,
+          "n": 983,
+          "observed_pass": 0.6236012207527976,
+          "predicted_pass": 0.6237353187904805
+        },
+        {
+          "bin": 7,
+          "n": 285,
+          "observed_pass": 0.8456140350877193,
+          "predicted_pass": 0.7757790247797488
+        },
+        {
+          "bin": 8,
+          "n": 446,
+          "observed_pass": 0.8699551569506726,
+          "predicted_pass": 0.8523834378166097
+        },
+        {
+          "bin": 9,
+          "n": 441,
+          "observed_pass": 0.9705215419501134,
+          "predicted_pass": 0.9469173480235928
+        }
+      ],
+      "top2_accuracy": 1.0,
+      "validation_log_loss": 0.6127448495209472
+    },
+    "xgboost": {
+      "accuracy": 0.6692982456140351,
+      "brier": 0.20226120948791504,
+      "calibration": "sigmoid",
+      "calibration_error": 0.013310124683275552,
+      "drive_pass_share_mae": 0.15820777157556018,
+      "log_loss": 0.5837827920913696,
+      "n": 5700,
+      "raw_log_loss": 0.5846402645111084,
+      "reliability": [
+        {
+          "bin": 1,
+          "n": 93,
+          "observed_pass": 0.25806451612903225,
+          "predicted_pass": 0.17248545587062836
+        },
+        {
+          "bin": 2,
+          "n": 252,
+          "observed_pass": 0.2222222222222222,
+          "predicted_pass": 0.25177836418151855
+        },
+        {
+          "bin": 3,
+          "n": 680,
+          "observed_pass": 0.3323529411764706,
+          "predicted_pass": 0.3623213469982147
+        },
+        {
+          "bin": 4,
+          "n": 1701,
+          "observed_pass": 0.4432686654908877,
+          "predicted_pass": 0.4497053921222687
+        },
+        {
+          "bin": 5,
+          "n": 866,
+          "observed_pass": 0.5484988452655889,
+          "predicted_pass": 0.5476982593536377
+        },
+        {
+          "bin": 6,
+          "n": 821,
+          "observed_pass": 0.6443361753958587,
+          "predicted_pass": 0.6471254825592041
+        },
+        {
+          "bin": 7,
+          "n": 332,
+          "observed_pass": 0.7590361445783133,
+          "predicted_pass": 0.7445890307426453
+        },
+        {
+          "bin": 8,
+          "n": 296,
+          "observed_pass": 0.8918918918918919,
+          "predicted_pass": 0.8581912517547607
+        },
+        {
+          "bin": 9,
+          "n": 659,
+          "observed_pass": 0.9544764795144158,
+          "predicted_pass": 0.9372106790542603
+        }
+      ],
+      "top2_accuracy": 1.0,
+      "validation_log_loss": 0.5962710380554199
+    }
+  },
+  "model_version": "ee30c4c13800db43",
+  "notes": [
+    "Top-two accuracy is 1 by definition for two classes.",
+    "The test years are never used for model or ensemble selection.",
+    "Defensive similarity adds FTN blitz and five-plus rush rates only if each defense has at least 24 eligible charted dropbacks; source date_pulled must precede the snapshot cutoff.",
+    "Similarity ablation uses a separate pre-test fit through the validation season and a fixed 50% maximum analog weight before sample-size shrinkage.",
+    "Production predictors are refit through training_cutoff; validation sigmoid parameters are retained."
+  ],
+  "runtime": {
+    "device": "CPU",
+    "python": "3.12.16",
+    "scikit_learn": "1.9.1"
+  },
+  "seed": 85029,
+  "selected_model": "xgboost",
+  "similarity_ablation": {
+    "available_ftn": {
+      "fixed_ensemble_log_loss": 0.603004166233289,
+      "minimum_charted_dropbacks": 1049,
+      "model_B_log_loss": 0.6031708952748921,
+      "model_C_log_loss": 0.6030249873198833,
+      "profile_features": [
+        "pass_share",
+        "qb_hit_rate",
+        "sack_rate",
+        "pass_epa",
+        "run_epa",
+        "yards_allowed",
+        "chart_blitz_rate",
+        "chart_five_plus_rushers_rate"
+      ]
+    },
+    "play_by_play": {
+      "fixed_ensemble_log_loss": 0.6029226640389876,
+      "minimum_charted_dropbacks": 0,
+      "model_B_log_loss": 0.6025409405326889,
+      "model_C_log_loss": 0.6030249873198833,
+      "profile_features": [
+        "pass_share",
+        "qb_hit_rate",
+        "sack_rate",
+        "pass_epa",
+        "run_epa",
+        "yards_allowed"
+      ]
+    }
+  },
+  "splits": {
+    "test": {
+      "end": "2026-11-22",
+      "games": 447,
+      "n": 5700,
+      "start": "2025-09-04"
+    },
+    "train": {
+      "end": "2024-02-11",
+      "games": 569,
+      "n": 7256,
+      "start": "2022-09-08"
+    },
+    "validation": {
+      "end": "2025-02-09",
+      "games": 285,
+      "n": 3556,
+      "start": "2024-09-05"
+    }
+  },
+  "training_cutoff": "2026-11-23"
+}

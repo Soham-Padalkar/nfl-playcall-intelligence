@@ -1,0 +1,40 @@
+{
+  "as_of": "2026-11-23",
+  "game": {
+    "game_id": "2026_12_ATL_MIN",
+    "date": "2026-11-29",
+    "kickoff_utc": "2026-11-29T18:00:00+00:00",
+    "away": "ATL",
+    "home": "MIN",
+    "stadium": "U.S. Bank Stadium"
+  },
+  "caller": "Tommy Rees",
+  "defensive_coordinator": "Brian Flores",
+  "intervals": [
+    {
+      "team": "CLE",
+      "season": 2025,
+      "min_week": 10,
+      "max_week": 18,
+      "source": "https://www.clevelandbrowns.com/news/offensive-coordinator-tommy-rees-to-call-plays-for-the-browns-team-coverage"
+    },
+    {
+      "team": "ATL",
+      "season": 2026,
+      "min_week": 1,
+      "max_week": 12,
+      "source": "https://www.atlantafalcons.com/news/tommy-rees-offensive-play-caller-kevin-stefanski"
+    }
+  ],
+  "sources": {
+    "schedule": "https://www.atlantafalcons.com/schedule/2026/",
+    "coordinator": "https://www.vikings.com/team/coaches-roster/brian-flores",
+    "depth_chart": "https://www.atlantafalcons.com/news/atlanta-falcons-week-10-depth-chart-vs-kansas-city-chiefs",
+    "injuries": "https://www.vikings.com/news/49ers-injury-report-week-11-2026-nfl-season"
+  },
+  "notes": [
+    "The Week 10 Atlanta depth chart listed Michael Penix Jr., Bijan Robinson, Drake London and Kyle Pitts Sr. as first team. Week 12 starters are unconfirmed.",
+    "Minnesota listed Jay Ward and Isaiah Rodgers as questionable for Week 11. Their Week 12 status is unconfirmed.",
+    "Team-published depth charts and injury reports are context only. The model does not use future lineup assumptions."
+  ]
+}

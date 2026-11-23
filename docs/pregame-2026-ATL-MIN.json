@@ -1,0 +1,1673 @@
+{
+  "id": "e2d8301bc8ec45209dc23cb5317e42f4",
+  "kind": "pregame",
+  "game_id": "2026_12_ATL_MIN",
+  "created_at": "2026-11-23T08:34:22.321188+00:00",
+  "model_version": "ee30c4c13800db43",
+  "dataset_version": "4626820e59837767",
+  "git_commit": "732f55569816f723e4e089131bf00ae3e2af2123",
+  "training_git_commit": "732f55569816f723e4e089131bf00ae3e2af2123",
+  "schema_version": 1,
+  "state": {
+    "down": 1,
+    "distance": 10,
+    "yardline_100": 75,
+    "score_differential": 0,
+    "game_seconds_remaining": 3600,
+    "offense": "ATL",
+    "defense": "MIN",
+    "previous_call": null,
+    "personnel": null,
+    "offense_rest": 14,
+    "defense_rest": 7,
+    "is_home": false,
+    "drive_ended": false,
+    "end_reason": null,
+    "caller": null
+  },
+  "kickoff_utc": "2026-11-29T18:00:00+00:00",
+  "forecast": {
+    "root": {
+      "state": {
+        "down": 1,
+        "distance": 10,
+        "yardline_100": 75,
+        "score_differential": 0,
+        "game_seconds_remaining": 3600,
+        "offense": "ATL",
+        "defense": "MIN",
+        "previous_call": null,
+        "personnel": null,
+        "offense_rest": 14,
+        "defense_rest": 7,
+        "is_home": false,
+        "drive_ended": false,
+        "end_reason": null,
+        "caller": null
+      },
+      "prediction": {
+        "p_pass": 0.44078049063682556,
+        "p_run": 0.5592195093631744,
+        "components": {
+          "A": {
+            "p_pass": 0.5328875336665885,
+            "p_run": 0.4671124663334115,
+            "effective_n": 0.0,
+            "weight": 0.0
+          },
+          "B": {
+            "p_pass": 0.5401879899388486,
+            "p_run": 0.45981201006115135,
+            "effective_n": 0.5681682204900657,
+            "weight": 0.0,
+            "sample_basis": "verified caller"
+          },
+          "C": {
+            "p_pass": 0.5328875336665885,
+            "p_run": 0.4671124663334115,
+            "effective_n": 28.0,
+            "weight": 1.0
+          }
+        },
+        "ensemble_p_pass": 0.5328875336665885,
+        "selected_model": "xgboost",
+        "tactical": {
+          "offense_personnel": {
+            "label": "Personnel grouping",
+            "n": 17,
+            "coverage": 0.4857142857142857,
+            "probabilities": {
+              "1 C, 2 G, 1 QB, 1 RB, 2 T, 2 TE, 2 WR": 0.4117647058823529,
+              "1 C, 2 G, 1 QB, 1 RB, 2 T, 1 TE, 3 WR": 0.35294117647058826,
+              "1 C, 3 G, 1 QB, 1 RB, 2 T, 2 TE, 1 WR": 0.11764705882352941,
+              "1 C, 2 G, 1 QB, 1 RB, 2 T, 3 TE, 1 WR": 0.058823529411764705,
+              "1 C, 2 G, 1 MLB, 1 QB, 1 RB, 3 T, 2 TE": 0.058823529411764705
+            }
+          },
+          "offense_formation": {
+            "label": "Formation family",
+            "n": 17,
+            "coverage": 0.4857142857142857,
+            "probabilities": {
+              "UNDER CENTER": 0.47058823529411764,
+              "SHOTGUN": 0.47058823529411764,
+              "PISTOL": 0.058823529411764705
+            }
+          },
+          "shotgun": {
+            "label": "Shotgun indicator",
+            "n": 35,
+            "coverage": 1.0,
+            "probabilities": {
+              "nan": 1.0
+            }
+          },
+          "qb_location": {
+            "label": "Charted quarterback alignment",
+            "n": 35,
+            "coverage": 1.0,
+            "probabilities": {
+              "Under center": 0.5428571428571428,
+              "Shotgun": 0.34285714285714286,
+              "Pistol": 0.11428571428571428
+            }
+          },
+          "is_motion": {
+            "label": "Pre-snap motion",
+            "n": 35,
+            "coverage": 1.0,
+            "probabilities": {
+              "Motion": 0.6857142857142857,
+              "No motion": 0.3142857142857143
+            }
+          },
+          "is_play_action": {
+            "label": "Play action",
+            "n": 35,
+            "coverage": 1.0,
+            "probabilities": {
+              "No play action": 0.7142857142857143,
+              "Play action": 0.2857142857142857
+            }
+          },
+          "is_rpo": {
+            "label": "Run-pass option",
+            "n": 35,
+            "coverage": 1.0,
+            "probabilities": {
+              "No RPO": 0.9714285714285714,
+              "RPO": 0.02857142857142857
+            }
+          },
+          "is_screen_pass": {
+            "label": "Screen pass",
+            "n": 18,
+            "coverage": 1.0,
+            "probabilities": {
+              "No screen": 0.7777777777777778,
+              "Screen": 0.2222222222222222
+            }
+          },
+          "run_location": {
+            "label": "Run direction",
+            "n": 17,
+            "coverage": 1.0,
+            "probabilities": {
+              "left": 0.5294117647058824,
+              "right": 0.35294117647058826,
+              "middle": 0.11764705882352941
+            }
+          },
+          "pass_location": {
+            "label": "Pass target direction",
+            "n": 16,
+            "coverage": 0.8888888888888888,
+            "probabilities": {
+              "right": 0.5625,
+              "left": 0.3125,
+              "middle": 0.125
+            }
+          },
+          "pass_length": {
+            "label": "Pass target depth",
+            "n": 16,
+            "coverage": 0.8888888888888888,
+            "probabilities": {
+              "short": 0.875,
+              "deep": 0.125
+            }
+          },
+          "route": {
+            "label": "Charted primary receiver route",
+            "n": 8,
+            "coverage": 0.4444444444444444,
+            "probabilities": {
+              "QUICK OUT": 0.625,
+              "SCREEN": 0.25,
+              "IN/DIG": 0.125
+            }
+          },
+          "defense_man_zone_type": {
+            "label": "Charted man or zone",
+            "n": 9,
+            "coverage": 0.2571428571428571,
+            "probabilities": {
+              "ZONE_COVERAGE": 0.8888888888888888,
+              "MAN_COVERAGE": 0.1111111111111111
+            }
+          },
+          "receiver_player_name": {
+            "label": "Named target on a pass \u00b7 ATL, latest 5 opening drives",
+            "n": 12,
+            "coverage": 0.9230769230769231,
+            "probabilities": {
+              "K.Pitts": 0.25,
+              "J.Dotson": 0.25,
+              "D.London": 0.16666666666666666,
+              "Z.Branch": 0.08333333333333333,
+              "Bi.Robinson": 0.08333333333333333,
+              "B.Robinson": 0.08333333333333333,
+              "C.Woerner": 0.08333333333333333
+            }
+          },
+          "rusher_player_name": {
+            "label": "Named ball carrier on a run \u00b7 ATL, latest 5 opening drives",
+            "n": 13,
+            "coverage": 1.0,
+            "probabilities": {
+              "Bi.Robinson": 0.6923076923076923,
+              "B.Robinson": 0.23076923076923078,
+              "M.Penix": 0.07692307692307693
+            }
+          }
+        },
+        "uncertainty": {
+          "n": 35,
+          "basis": "verified caller in matching down and distance",
+          "empirical_pass_rate": 0.5142857142857142,
+          "wilson95": [
+            0.35568539626711626,
+            0.6700601960874726
+          ]
+        }
+      },
+      "mass": 1.0,
+      "children": [
+        {
+          "call": "pass",
+          "outcome": {
+            "yards": 0,
+            "turnover": false,
+            "touchdown": false,
+            "safety": false,
+            "probability": 0.3918918918918919
+          },
+          "conditional_probability": 0.1727383003847019,
+          "node": {
+            "state": {
+              "down": 2,
+              "distance": 10,
+              "yardline_100": 75,
+              "score_differential": 0,
+              "game_seconds_remaining": 3570,
+              "offense": "ATL",
+              "defense": "MIN",
+              "previous_call": "pass",
+              "personnel": null,
+              "offense_rest": 14,
+              "defense_rest": 7,
+              "is_home": false,
+              "drive_ended": false,
+              "end_reason": null,
+              "caller": null
+            },
+            "prediction": {
+              "p_pass": 0.47680598497390747,
+              "p_run": 0.5231940150260925,
+              "components": {
+                "A": {
+                  "p_pass": 0.681806594843016,
+                  "p_run": 0.318193405156984,
+                  "effective_n": 0.0,
+                  "weight": 0.0
+                },
+                "B": {
+                  "p_pass": 0.6843203933172141,
+                  "p_run": 0.31567960668278594,
+                  "effective_n": 0.19111517533465547,
+                  "weight": 0.0,
+                  "sample_basis": "verified caller"
+                },
+                "C": {
+                  "p_pass": 0.681806594843016,
+                  "p_run": 0.318193405156984,
+                  "effective_n": 10.0,
+                  "weight": 1.0
+                }
+              },
+              "ensemble_p_pass": 0.681806594843016,
+              "selected_model": "xgboost"
+            },
+            "mass": 0.1727383003847019,
+            "children": [
+              {
+                "call": "pass",
+                "outcome": {
+                  "yards": 0,
+                  "turnover": false,
+                  "touchdown": false,
+                  "safety": false,
+                  "probability": 0.3090909090909091
+                },
+                "conditional_probability": 0.1473763953555714,
+                "node": {
+                  "state": {
+                    "down": 3,
+                    "distance": 10,
+                    "yardline_100": 75,
+                    "score_differential": 0,
+                    "game_seconds_remaining": 3540,
+                    "offense": "ATL",
+                    "defense": "MIN",
+                    "previous_call": "pass",
+                    "personnel": null,
+                    "offense_rest": 14,
+                    "defense_rest": 7,
+                    "is_home": false,
+                    "drive_ended": false,
+                    "end_reason": null,
+                    "caller": null
+                  },
+                  "prediction": {
+                    "p_pass": 0.9406259059906006,
+                    "p_run": 0.059374094009399414,
+                    "components": {
+                      "A": {
+                        "p_pass": 0.9716175365170102,
+                        "p_run": 0.028382463482989784,
+                        "effective_n": 0.0,
+                        "weight": 0.0
+                      },
+                      "B": {
+                        "p_pass": 0.9717412574768405,
+                        "p_run": 0.02825874252315952,
+                        "effective_n": 0.1050755543524936,
+                        "weight": 0.0,
+                        "sample_basis": "verified caller"
+                      },
+                      "C": {
+                        "p_pass": 0.9716175365170103,
+                        "p_run": 0.028382463482989673,
+                        "effective_n": 4.0,
+                        "weight": 1.0
+                      }
+                    },
+                    "ensemble_p_pass": 0.9716175365170103,
+                    "selected_model": "xgboost"
+                  },
+                  "mass": 0.025457548050545276,
+                  "children": [
+                    {
+                      "call": "pass",
+                      "outcome": {
+                        "yards": 0,
+                        "turnover": false,
+                        "touchdown": false,
+                        "safety": false,
+                        "probability": 0.34285714285714286
+                      },
+                      "conditional_probability": 0.3225003106253488,
+                      "node": {
+                        "state": {
+                          "down": 4,
+                          "distance": 10,
+                          "yardline_100": 75,
+                          "score_differential": 0,
+                          "game_seconds_remaining": 3510,
+                          "offense": "ATL",
+                          "defense": "MIN",
+                          "previous_call": "pass",
+                          "personnel": null,
+                          "offense_rest": 14,
+                          "defense_rest": 7,
+                          "is_home": false,
+                          "drive_ended": false,
+                          "end_reason": null,
+                          "caller": null
+                        },
+                        "prediction": {
+                          "p_pass": 0.8262103796005249,
+                          "p_run": 0.1737896203994751,
+                          "components": {
+                            "A": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 0.0
+                            },
+                            "B": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 0.0,
+                              "sample_basis": "same offense proxy"
+                            },
+                            "C": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 1.0
+                            }
+                          },
+                          "ensemble_p_pass": 0.5520723220577872,
+                          "selected_model": "xgboost"
+                        },
+                        "mass": 0.008210067154060594,
+                        "children": []
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "call": "run",
+                "outcome": {
+                  "yards": 5,
+                  "turnover": false,
+                  "touchdown": false,
+                  "safety": false,
+                  "probability": 0.20689655172413793
+                },
+                "conditional_probability": 0.10824703759160535,
+                "node": {
+                  "state": {
+                    "down": 3,
+                    "distance": 5,
+                    "yardline_100": 70,
+                    "score_differential": 0,
+                    "game_seconds_remaining": 3540,
+                    "offense": "ATL",
+                    "defense": "MIN",
+                    "previous_call": "run",
+                    "personnel": null,
+                    "offense_rest": 14,
+                    "defense_rest": 7,
+                    "is_home": false,
+                    "drive_ended": false,
+                    "end_reason": null,
+                    "caller": null
+                  },
+                  "prediction": {
+                    "p_pass": 0.9367886781692505,
+                    "p_run": 0.06321132183074951,
+                    "components": {
+                      "A": {
+                        "p_pass": 0.9481040900023169,
+                        "p_run": 0.05189590999768312,
+                        "effective_n": 0.0,
+                        "weight": 0.0
+                      },
+                      "B": {
+                        "p_pass": 0.9491602543405838,
+                        "p_run": 0.05083974565941618,
+                        "effective_n": 0.4985851874282873,
+                        "weight": 0.0,
+                        "sample_basis": "same offense proxy"
+                      },
+                      "C": {
+                        "p_pass": 0.9481040900023169,
+                        "p_run": 0.05189590999768312,
+                        "effective_n": 5.5,
+                        "weight": 1.0
+                      }
+                    },
+                    "ensemble_p_pass": 0.9481040900023169,
+                    "selected_model": "xgboost"
+                  },
+                  "mass": 0.018698409295252842,
+                  "children": [
+                    {
+                      "call": "pass",
+                      "outcome": {
+                        "yards": 0,
+                        "turnover": false,
+                        "touchdown": false,
+                        "safety": false,
+                        "probability": 0.3548387096774194
+                      },
+                      "conditional_probability": 0.3324088858019921,
+                      "node": {
+                        "state": {
+                          "down": 4,
+                          "distance": 5,
+                          "yardline_100": 70,
+                          "score_differential": 0,
+                          "game_seconds_remaining": 3510,
+                          "offense": "ATL",
+                          "defense": "MIN",
+                          "previous_call": "pass",
+                          "personnel": null,
+                          "offense_rest": 14,
+                          "defense_rest": 7,
+                          "is_home": false,
+                          "drive_ended": false,
+                          "end_reason": null,
+                          "caller": null
+                        },
+                        "prediction": {
+                          "p_pass": 0.8124953508377075,
+                          "p_run": 0.18750464916229248,
+                          "components": {
+                            "A": {
+                              "p_pass": 0.538074582122093,
+                              "p_run": 0.461925417877907,
+                              "effective_n": 0.0,
+                              "weight": 0.0
+                            },
+                            "B": {
+                              "p_pass": 0.538074582122093,
+                              "p_run": 0.461925417877907,
+                              "effective_n": 0.0,
+                              "weight": 0.0,
+                              "sample_basis": "same offense proxy"
+                            },
+                            "C": {
+                              "p_pass": 0.538074582122093,
+                              "p_run": 0.461925417877907,
+                              "effective_n": 0.0,
+                              "weight": 1.0
+                            }
+                          },
+                          "ensemble_p_pass": 0.538074582122093,
+                          "selected_model": "xgboost"
+                        },
+                        "mass": 0.00621551740010461,
+                        "children": []
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "call": "run",
+                "outcome": {
+                  "yards": 2,
+                  "turnover": false,
+                  "touchdown": false,
+                  "safety": false,
+                  "probability": 0.1724137931034483
+                },
+                "conditional_probability": 0.09020586465967113,
+                "node": {
+                  "state": {
+                    "down": 3,
+                    "distance": 8,
+                    "yardline_100": 73,
+                    "score_differential": 0,
+                    "game_seconds_remaining": 3540,
+                    "offense": "ATL",
+                    "defense": "MIN",
+                    "previous_call": "run",
+                    "personnel": null,
+                    "offense_rest": 14,
+                    "defense_rest": 7,
+                    "is_home": false,
+                    "drive_ended": false,
+                    "end_reason": null,
+                    "caller": null
+                  },
+                  "prediction": {
+                    "p_pass": 0.945918619632721,
+                    "p_run": 0.05408138036727905,
+                    "components": {
+                      "A": {
+                        "p_pass": 0.9716175365170102,
+                        "p_run": 0.028382463482989784,
+                        "effective_n": 0.0,
+                        "weight": 0.0
+                      },
+                      "B": {
+                        "p_pass": 0.9717412574768405,
+                        "p_run": 0.02825874252315952,
+                        "effective_n": 0.1050755543524936,
+                        "weight": 0.0,
+                        "sample_basis": "verified caller"
+                      },
+                      "C": {
+                        "p_pass": 0.9716175365170103,
+                        "p_run": 0.028382463482989673,
+                        "effective_n": 4.0,
+                        "weight": 1.0
+                      }
+                    },
+                    "ensemble_p_pass": 0.9716175365170103,
+                    "selected_model": "xgboost"
+                  },
+                  "mass": 0.015582007746044037,
+                  "children": [
+                    {
+                      "call": "pass",
+                      "outcome": {
+                        "yards": 0,
+                        "turnover": false,
+                        "touchdown": false,
+                        "safety": false,
+                        "probability": 0.34285714285714286
+                      },
+                      "conditional_probability": 0.3243149553026472,
+                      "node": {
+                        "state": {
+                          "down": 4,
+                          "distance": 8,
+                          "yardline_100": 73,
+                          "score_differential": 0,
+                          "game_seconds_remaining": 3510,
+                          "offense": "ATL",
+                          "defense": "MIN",
+                          "previous_call": "pass",
+                          "personnel": null,
+                          "offense_rest": 14,
+                          "defense_rest": 7,
+                          "is_home": false,
+                          "drive_ended": false,
+                          "end_reason": null,
+                          "caller": null
+                        },
+                        "prediction": {
+                          "p_pass": 0.8304759860038757,
+                          "p_run": 0.16952401399612427,
+                          "components": {
+                            "A": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 0.0
+                            },
+                            "B": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 0.0,
+                              "sample_basis": "same offense proxy"
+                            },
+                            "C": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 1.0
+                            }
+                          },
+                          "ensemble_p_pass": 0.5520723220577872,
+                          "selected_model": "xgboost"
+                        },
+                        "mass": 0.005053478145683774,
+                        "children": []
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "call": "run",
+                "outcome": {
+                  "yards": 0,
+                  "turnover": false,
+                  "touchdown": false,
+                  "safety": false,
+                  "probability": 0.13793103448275862
+                },
+                "conditional_probability": 0.0721646917277369,
+                "node": {
+                  "state": {
+                    "down": 3,
+                    "distance": 10,
+                    "yardline_100": 75,
+                    "score_differential": 0,
+                    "game_seconds_remaining": 3540,
+                    "offense": "ATL",
+                    "defense": "MIN",
+                    "previous_call": "run",
+                    "personnel": null,
+                    "offense_rest": 14,
+                    "defense_rest": 7,
+                    "is_home": false,
+                    "drive_ended": false,
+                    "end_reason": null,
+                    "caller": null
+                  },
+                  "prediction": {
+                    "p_pass": 0.9452826976776123,
+                    "p_run": 0.054717302322387695,
+                    "components": {
+                      "A": {
+                        "p_pass": 0.9716175365170102,
+                        "p_run": 0.028382463482989784,
+                        "effective_n": 0.0,
+                        "weight": 0.0
+                      },
+                      "B": {
+                        "p_pass": 0.9717412574768405,
+                        "p_run": 0.02825874252315952,
+                        "effective_n": 0.1050755543524936,
+                        "weight": 0.0,
+                        "sample_basis": "verified caller"
+                      },
+                      "C": {
+                        "p_pass": 0.9716175365170103,
+                        "p_run": 0.028382463482989673,
+                        "effective_n": 4.0,
+                        "weight": 1.0
+                      }
+                    },
+                    "ensemble_p_pass": 0.9716175365170103,
+                    "selected_model": "xgboost"
+                  },
+                  "mass": 0.01246560619683523,
+                  "children": [
+                    {
+                      "call": "pass",
+                      "outcome": {
+                        "yards": 0,
+                        "turnover": false,
+                        "touchdown": false,
+                        "safety": false,
+                        "probability": 0.34285714285714286
+                      },
+                      "conditional_probability": 0.3240969249180385,
+                      "node": {
+                        "state": {
+                          "down": 4,
+                          "distance": 10,
+                          "yardline_100": 75,
+                          "score_differential": 0,
+                          "game_seconds_remaining": 3510,
+                          "offense": "ATL",
+                          "defense": "MIN",
+                          "previous_call": "pass",
+                          "personnel": null,
+                          "offense_rest": 14,
+                          "defense_rest": 7,
+                          "is_home": false,
+                          "drive_ended": false,
+                          "end_reason": null,
+                          "caller": null
+                        },
+                        "prediction": {
+                          "p_pass": 0.8262103796005249,
+                          "p_run": 0.1737896203994751,
+                          "components": {
+                            "A": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 0.0
+                            },
+                            "B": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 0.0,
+                              "sample_basis": "same offense proxy"
+                            },
+                            "C": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 1.0
+                            }
+                          },
+                          "ensemble_p_pass": 0.5520723220577872,
+                          "selected_model": "xgboost"
+                        },
+                        "mass": 0.004040064635633543,
+                        "children": []
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "call": "run",
+          "outcome": {
+            "yards": 2,
+            "turnover": false,
+            "touchdown": false,
+            "safety": false,
+            "probability": 0.17543859649122806
+          },
+          "conditional_probability": 0.0981086858531885,
+          "node": {
+            "state": {
+              "down": 2,
+              "distance": 8,
+              "yardline_100": 73,
+              "score_differential": 0,
+              "game_seconds_remaining": 3570,
+              "offense": "ATL",
+              "defense": "MIN",
+              "previous_call": "run",
+              "personnel": null,
+              "offense_rest": 14,
+              "defense_rest": 7,
+              "is_home": false,
+              "drive_ended": false,
+              "end_reason": null,
+              "caller": null
+            },
+            "prediction": {
+              "p_pass": 0.6655793786048889,
+              "p_run": 0.3344206213951111,
+              "components": {
+                "A": {
+                  "p_pass": 0.681806594843016,
+                  "p_run": 0.318193405156984,
+                  "effective_n": 0.0,
+                  "weight": 0.0
+                },
+                "B": {
+                  "p_pass": 0.6843203933172141,
+                  "p_run": 0.31567960668278594,
+                  "effective_n": 0.19111517533465547,
+                  "weight": 0.0,
+                  "sample_basis": "verified caller"
+                },
+                "C": {
+                  "p_pass": 0.681806594843016,
+                  "p_run": 0.318193405156984,
+                  "effective_n": 10.0,
+                  "weight": 1.0
+                }
+              },
+              "ensemble_p_pass": 0.681806594843016,
+              "selected_model": "xgboost"
+            },
+            "mass": 0.0981086858531885,
+            "children": [
+              {
+                "call": "pass",
+                "outcome": {
+                  "yards": 0,
+                  "turnover": false,
+                  "touchdown": false,
+                  "safety": false,
+                  "probability": 0.3090909090909091
+                },
+                "conditional_probability": 0.20572453520514747,
+                "node": {
+                  "state": {
+                    "down": 3,
+                    "distance": 8,
+                    "yardline_100": 73,
+                    "score_differential": 0,
+                    "game_seconds_remaining": 3540,
+                    "offense": "ATL",
+                    "defense": "MIN",
+                    "previous_call": "pass",
+                    "personnel": null,
+                    "offense_rest": 14,
+                    "defense_rest": 7,
+                    "is_home": false,
+                    "drive_ended": false,
+                    "end_reason": null,
+                    "caller": null
+                  },
+                  "prediction": {
+                    "p_pass": 0.9422794580459595,
+                    "p_run": 0.05772054195404053,
+                    "components": {
+                      "A": {
+                        "p_pass": 0.9716175365170102,
+                        "p_run": 0.028382463482989784,
+                        "effective_n": 0.0,
+                        "weight": 0.0
+                      },
+                      "B": {
+                        "p_pass": 0.9717412574768405,
+                        "p_run": 0.02825874252315952,
+                        "effective_n": 0.1050755543524936,
+                        "weight": 0.0,
+                        "sample_basis": "verified caller"
+                      },
+                      "C": {
+                        "p_pass": 0.9716175365170103,
+                        "p_run": 0.028382463482989673,
+                        "effective_n": 4.0,
+                        "weight": 1.0
+                      }
+                    },
+                    "ensemble_p_pass": 0.9716175365170103,
+                    "selected_model": "xgboost"
+                  },
+                  "mass": 0.020183363796735028,
+                  "children": [
+                    {
+                      "call": "pass",
+                      "outcome": {
+                        "yards": 0,
+                        "turnover": false,
+                        "touchdown": false,
+                        "safety": false,
+                        "probability": 0.34285714285714286
+                      },
+                      "conditional_probability": 0.3230672427586147,
+                      "node": {
+                        "state": {
+                          "down": 4,
+                          "distance": 8,
+                          "yardline_100": 73,
+                          "score_differential": 0,
+                          "game_seconds_remaining": 3510,
+                          "offense": "ATL",
+                          "defense": "MIN",
+                          "previous_call": "pass",
+                          "personnel": null,
+                          "offense_rest": 14,
+                          "defense_rest": 7,
+                          "is_home": false,
+                          "drive_ended": false,
+                          "end_reason": null,
+                          "caller": null
+                        },
+                        "prediction": {
+                          "p_pass": 0.8304759860038757,
+                          "p_run": 0.16952401399612427,
+                          "components": {
+                            "A": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 0.0
+                            },
+                            "B": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 0.0,
+                              "sample_basis": "same offense proxy"
+                            },
+                            "C": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 1.0
+                            }
+                          },
+                          "ensemble_p_pass": 0.5520723220577872,
+                          "selected_model": "xgboost"
+                        },
+                        "mass": 0.006520583691405231,
+                        "children": []
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "call": "run",
+          "outcome": {
+            "yards": 3,
+            "turnover": false,
+            "touchdown": false,
+            "safety": false,
+            "probability": 0.14912280701754385
+          },
+          "conditional_probability": 0.08339238297521022,
+          "node": {
+            "state": {
+              "down": 2,
+              "distance": 7,
+              "yardline_100": 72,
+              "score_differential": 0,
+              "game_seconds_remaining": 3570,
+              "offense": "ATL",
+              "defense": "MIN",
+              "previous_call": "run",
+              "personnel": null,
+              "offense_rest": 14,
+              "defense_rest": 7,
+              "is_home": false,
+              "drive_ended": false,
+              "end_reason": null,
+              "caller": null
+            },
+            "prediction": {
+              "p_pass": 0.6419258117675781,
+              "p_run": 0.3580741882324219,
+              "components": {
+                "A": {
+                  "p_pass": 0.681806594843016,
+                  "p_run": 0.318193405156984,
+                  "effective_n": 0.0,
+                  "weight": 0.0
+                },
+                "B": {
+                  "p_pass": 0.6843203933172141,
+                  "p_run": 0.31567960668278594,
+                  "effective_n": 0.19111517533465547,
+                  "weight": 0.0,
+                  "sample_basis": "verified caller"
+                },
+                "C": {
+                  "p_pass": 0.681806594843016,
+                  "p_run": 0.318193405156984,
+                  "effective_n": 10.0,
+                  "weight": 1.0
+                }
+              },
+              "ensemble_p_pass": 0.681806594843016,
+              "selected_model": "xgboost"
+            },
+            "mass": 0.08339238297521022,
+            "children": [
+              {
+                "call": "pass",
+                "outcome": {
+                  "yards": 0,
+                  "turnover": false,
+                  "touchdown": false,
+                  "safety": false,
+                  "probability": 0.3090909090909091
+                },
+                "conditional_probability": 0.1984134327281605,
+                "node": {
+                  "state": {
+                    "down": 3,
+                    "distance": 7,
+                    "yardline_100": 72,
+                    "score_differential": 0,
+                    "game_seconds_remaining": 3540,
+                    "offense": "ATL",
+                    "defense": "MIN",
+                    "previous_call": "pass",
+                    "personnel": null,
+                    "offense_rest": 14,
+                    "defense_rest": 7,
+                    "is_home": false,
+                    "drive_ended": false,
+                    "end_reason": null,
+                    "caller": null
+                  },
+                  "prediction": {
+                    "p_pass": 0.9394705891609192,
+                    "p_run": 0.06052941083908081,
+                    "components": {
+                      "A": {
+                        "p_pass": 0.9716175365170102,
+                        "p_run": 0.028382463482989784,
+                        "effective_n": 0.0,
+                        "weight": 0.0
+                      },
+                      "B": {
+                        "p_pass": 0.9717412574768405,
+                        "p_run": 0.02825874252315952,
+                        "effective_n": 0.1050755543524936,
+                        "weight": 0.0,
+                        "sample_basis": "verified caller"
+                      },
+                      "C": {
+                        "p_pass": 0.9716175365170103,
+                        "p_run": 0.028382463482989673,
+                        "effective_n": 4.0,
+                        "weight": 1.0
+                      }
+                    },
+                    "ensemble_p_pass": 0.9716175365170103,
+                    "selected_model": "xgboost"
+                  },
+                  "mass": 0.01654616896949287,
+                  "children": [
+                    {
+                      "call": "pass",
+                      "outcome": {
+                        "yards": 0,
+                        "turnover": false,
+                        "touchdown": false,
+                        "safety": false,
+                        "probability": 0.34285714285714286
+                      },
+                      "conditional_probability": 0.3221042019980294,
+                      "node": {
+                        "state": {
+                          "down": 4,
+                          "distance": 7,
+                          "yardline_100": 72,
+                          "score_differential": 0,
+                          "game_seconds_remaining": 3510,
+                          "offense": "ATL",
+                          "defense": "MIN",
+                          "previous_call": "pass",
+                          "personnel": null,
+                          "offense_rest": 14,
+                          "defense_rest": 7,
+                          "is_home": false,
+                          "drive_ended": false,
+                          "end_reason": null,
+                          "caller": null
+                        },
+                        "prediction": {
+                          "p_pass": 0.8232470750808716,
+                          "p_run": 0.17675292491912842,
+                          "components": {
+                            "A": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 0.0
+                            },
+                            "B": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 0.0,
+                              "sample_basis": "same offense proxy"
+                            },
+                            "C": {
+                              "p_pass": 0.5520723220577872,
+                              "p_run": 0.4479276779422128,
+                              "effective_n": 0.0,
+                              "weight": 1.0
+                            }
+                          },
+                          "ensemble_p_pass": 0.5520723220577872,
+                          "selected_model": "xgboost"
+                        },
+                        "mass": 0.005329590552043058,
+                        "children": []
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "call": "run",
+          "outcome": {
+            "yards": 5,
+            "turnover": false,
+            "touchdown": false,
+            "safety": false,
+            "probability": 0.10526315789473684
+          },
+          "conditional_probability": 0.058865211511913096,
+          "node": {
+            "state": {
+              "down": 2,
+              "distance": 5,
+              "yardline_100": 70,
+              "score_differential": 0,
+              "game_seconds_remaining": 3570,
+              "offense": "ATL",
+              "defense": "MIN",
+              "previous_call": "run",
+              "personnel": null,
+              "offense_rest": 14,
+              "defense_rest": 7,
+              "is_home": false,
+              "drive_ended": false,
+              "end_reason": null,
+              "caller": null
+            },
+            "prediction": {
+              "p_pass": 0.594351053237915,
+              "p_run": 0.40564894676208496,
+              "components": {
+                "A": {
+                  "p_pass": 0.5478853093036335,
+                  "p_run": 0.45211469069636645,
+                  "effective_n": 0.0,
+                  "weight": 0.0
+                },
+                "B": {
+                  "p_pass": 0.545865391621987,
+                  "p_run": 0.454134608378013,
+                  "effective_n": 0.08880948509204763,
+                  "weight": 0.0,
+                  "sample_basis": "verified caller"
+                },
+                "C": {
+                  "p_pass": 0.5478853093036335,
+                  "p_run": 0.45211469069636645,
+                  "effective_n": 8.0,
+                  "weight": 1.0
+                }
+              },
+              "ensemble_p_pass": 0.5478853093036335,
+              "selected_model": "xgboost"
+            },
+            "mass": 0.058865211511913096,
+            "children": [
+              {
+                "call": "pass",
+                "outcome": {
+                  "yards": 0,
+                  "turnover": false,
+                  "touchdown": false,
+                  "safety": false,
+                  "probability": 0.3225806451612903
+                },
+                "conditional_probability": 0.19172614620577905,
+                "node": {
+                  "state": {
+                    "down": 3,
+                    "distance": 5,
+                    "yardline_100": 70,
+                    "score_differential": 0,
+                    "game_seconds_remaining": 3540,
+                    "offense": "ATL",
+                    "defense": "MIN",
+                    "previous_call": "pass",
+                    "personnel": null,
+                    "offense_rest": 14,
+                    "defense_rest": 7,
+                    "is_home": false,
+                    "drive_ended": false,
+                    "end_reason": null,
+                    "caller": null
+                  },
+                  "prediction": {
+                    "p_pass": 0.9357607960700989,
+                    "p_run": 0.06423920392990112,
+                    "components": {
+                      "A": {
+                        "p_pass": 0.9481040900023169,
+                        "p_run": 0.05189590999768312,
+                        "effective_n": 0.0,
+                        "weight": 0.0
+                      },
+                      "B": {
+                        "p_pass": 0.9491602543405838,
+                        "p_run": 0.05083974565941618,
+                        "effective_n": 0.4985851874282873,
+                        "weight": 0.0,
+                        "sample_basis": "same offense proxy"
+                      },
+                      "C": {
+                        "p_pass": 0.9481040900023169,
+                        "p_run": 0.05189590999768312,
+                        "effective_n": 5.5,
+                        "weight": 1.0
+                      }
+                    },
+                    "ensemble_p_pass": 0.9481040900023169,
+                    "selected_model": "xgboost"
+                  },
+                  "mass": 0.011286000148767157,
+                  "children": [
+                    {
+                      "call": "pass",
+                      "outcome": {
+                        "yards": 0,
+                        "turnover": false,
+                        "touchdown": false,
+                        "safety": false,
+                        "probability": 0.3548387096774194
+                      },
+                      "conditional_probability": 0.33204415344422866,
+                      "node": {
+                        "state": {
+                          "down": 4,
+                          "distance": 5,
+                          "yardline_100": 70,
+                          "score_differential": 0,
+                          "game_seconds_remaining": 3510,
+                          "offense": "ATL",
+                          "defense": "MIN",
+                          "previous_call": "pass",
+                          "personnel": null,
+                          "offense_rest": 14,
+                          "defense_rest": 7,
+                          "is_home": false,
+                          "drive_ended": false,
+                          "end_reason": null,
+                          "caller": null
+                        },
+                        "prediction": {
+                          "p_pass": 0.8124953508377075,
+                          "p_run": 0.18750464916229248,
+                          "components": {
+                            "A": {
+                              "p_pass": 0.538074582122093,
+                              "p_run": 0.461925417877907,
+                              "effective_n": 0.0,
+                              "weight": 0.0
+                            },
+                            "B": {
+                              "p_pass": 0.538074582122093,
+                              "p_run": 0.461925417877907,
+                              "effective_n": 0.0,
+                              "weight": 0.0,
+                              "sample_basis": "same offense proxy"
+                            },
+                            "C": {
+                              "p_pass": 0.538074582122093,
+                              "p_run": 0.461925417877907,
+                              "effective_n": 0.0,
+                              "weight": 1.0
+                            }
+                          },
+                          "ensemble_p_pass": 0.538074582122093,
+                          "selected_model": "xgboost"
+                        },
+                        "mass": 0.0037474503651688295,
+                        "children": []
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "call": "run",
+          "outcome": {
+            "yards": 6,
+            "turnover": false,
+            "touchdown": false,
+            "safety": false,
+            "probability": 0.09649122807017543
+          },
+          "conditional_probability": 0.05395977721925367,
+          "node": {
+            "state": {
+              "down": 2,
+              "distance": 4,
+              "yardline_100": 69,
+              "score_differential": 0,
+              "game_seconds_remaining": 3570,
+              "offense": "ATL",
+              "defense": "MIN",
+              "previous_call": "run",
+              "personnel": null,
+              "offense_rest": 14,
+              "defense_rest": 7,
+              "is_home": false,
+              "drive_ended": false,
+              "end_reason": null,
+              "caller": null
+            },
+            "prediction": {
+              "p_pass": 0.5500646233558655,
+              "p_run": 0.4499353766441345,
+              "components": {
+                "A": {
+                  "p_pass": 0.5478853093036335,
+                  "p_run": 0.45211469069636645,
+                  "effective_n": 0.0,
+                  "weight": 0.0
+                },
+                "B": {
+                  "p_pass": 0.545865391621987,
+                  "p_run": 0.454134608378013,
+                  "effective_n": 0.08880948509204763,
+                  "weight": 0.0,
+                  "sample_basis": "verified caller"
+                },
+                "C": {
+                  "p_pass": 0.5478853093036335,
+                  "p_run": 0.45211469069636645,
+                  "effective_n": 8.0,
+                  "weight": 1.0
+                }
+              },
+              "ensemble_p_pass": 0.5478853093036335,
+              "selected_model": "xgboost"
+            },
+            "mass": 0.05395977721925367,
+            "children": [
+              {
+                "call": "pass",
+                "outcome": {
+                  "yards": 0,
+                  "turnover": false,
+                  "touchdown": false,
+                  "safety": false,
+                  "probability": 0.3225806451612903
+                },
+                "conditional_probability": 0.17744020108253725,
+                "node": {
+                  "state": {
+                    "down": 3,
+                    "distance": 4,
+                    "yardline_100": 69,
+                    "score_differential": 0,
+                    "game_seconds_remaining": 3540,
+                    "offense": "ATL",
+                    "defense": "MIN",
+                    "previous_call": "pass",
+                    "personnel": null,
+                    "offense_rest": 14,
+                    "defense_rest": 7,
+                    "is_home": false,
+                    "drive_ended": false,
+                    "end_reason": null,
+                    "caller": null
+                  },
+                  "prediction": {
+                    "p_pass": 0.9112040996551514,
+                    "p_run": 0.08879590034484863,
+                    "components": {
+                      "A": {
+                        "p_pass": 0.9481040900023169,
+                        "p_run": 0.05189590999768312,
+                        "effective_n": 0.0,
+                        "weight": 0.0
+                      },
+                      "B": {
+                        "p_pass": 0.9491602543405838,
+                        "p_run": 0.05083974565941618,
+                        "effective_n": 0.4985851874282873,
+                        "weight": 0.0,
+                        "sample_basis": "same offense proxy"
+                      },
+                      "C": {
+                        "p_pass": 0.9481040900023169,
+                        "p_run": 0.05189590999768312,
+                        "effective_n": 5.5,
+                        "weight": 1.0
+                      }
+                    },
+                    "ensemble_p_pass": 0.9481040900023169,
+                    "selected_model": "xgboost"
+                  },
+                  "mass": 0.009574633720153283,
+                  "children": [
+                    {
+                      "call": "pass",
+                      "outcome": {
+                        "yards": 0,
+                        "turnover": false,
+                        "touchdown": false,
+                        "safety": false,
+                        "probability": 0.3548387096774194
+                      },
+                      "conditional_probability": 0.3233304869744086,
+                      "node": {
+                        "state": {
+                          "down": 4,
+                          "distance": 4,
+                          "yardline_100": 69,
+                          "score_differential": 0,
+                          "game_seconds_remaining": 3510,
+                          "offense": "ATL",
+                          "defense": "MIN",
+                          "previous_call": "pass",
+                          "personnel": null,
+                          "offense_rest": 14,
+                          "defense_rest": 7,
+                          "is_home": false,
+                          "drive_ended": false,
+                          "end_reason": null,
+                          "caller": null
+                        },
+                        "prediction": {
+                          "p_pass": 0.757213830947876,
+                          "p_run": 0.24278616905212402,
+                          "components": {
+                            "A": {
+                              "p_pass": 0.538074582122093,
+                              "p_run": 0.461925417877907,
+                              "effective_n": 0.0,
+                              "weight": 0.0
+                            },
+                            "B": {
+                              "p_pass": 0.538074582122093,
+                              "p_run": 0.461925417877907,
+                              "effective_n": 0.0,
+                              "weight": 0.0,
+                              "sample_basis": "same offense proxy"
+                            },
+                            "C": {
+                              "p_pass": 0.538074582122093,
+                              "p_run": 0.461925417877907,
+                              "effective_n": 0.0,
+                              "weight": 1.0
+                            }
+                          },
+                          "ensemble_p_pass": 0.538074582122093,
+                          "selected_model": "xgboost"
+                        },
+                        "mass": 0.0030957709833387545,
+                        "children": []
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "call": "run",
+          "outcome": {
+            "yards": 4,
+            "turnover": false,
+            "touchdown": false,
+            "safety": false,
+            "probability": 0.07894736842105263
+          },
+          "conditional_probability": 0.04414890863393482,
+          "node": {
+            "state": {
+              "down": 2,
+              "distance": 6,
+              "yardline_100": 71,
+              "score_differential": 0,
+              "game_seconds_remaining": 3570,
+              "offense": "ATL",
+              "defense": "MIN",
+              "previous_call": "run",
+              "personnel": null,
+              "offense_rest": 14,
+              "defense_rest": 7,
+              "is_home": false,
+              "drive_ended": false,
+              "end_reason": null,
+              "caller": null
+            },
+            "prediction": {
+              "p_pass": 0.611147403717041,
+              "p_run": 0.388852596282959,
+              "components": {
+                "A": {
+                  "p_pass": 0.5478853093036335,
+                  "p_run": 0.45211469069636645,
+                  "effective_n": 0.0,
+                  "weight": 0.0
+                },
+                "B": {
+                  "p_pass": 0.545865391621987,
+                  "p_run": 0.454134608378013,
+                  "effective_n": 0.08880948509204763,
+                  "weight": 0.0,
+                  "sample_basis": "verified caller"
+                },
+                "C": {
+                  "p_pass": 0.5478853093036335,
+                  "p_run": 0.45211469069636645,
+                  "effective_n": 8.0,
+                  "weight": 1.0
+                }
+              },
+              "ensemble_p_pass": 0.5478853093036335,
+              "selected_model": "xgboost"
+            },
+            "mass": 0.04414890863393482,
+            "children": []
+          }
+        },
+        {
+          "call": "pass",
+          "outcome": {
+            "yards": 9,
+            "turnover": false,
+            "touchdown": false,
+            "safety": false,
+            "probability": 0.08108108108108109
+          },
+          "conditional_probability": 0.03573895870028316,
+          "node": {
+            "state": {
+              "down": 2,
+              "distance": 1,
+              "yardline_100": 66,
+              "score_differential": 0,
+              "game_seconds_remaining": 3570,
+              "offense": "ATL",
+              "defense": "MIN",
+              "previous_call": "pass",
+              "personnel": null,
+              "offense_rest": 14,
+              "defense_rest": 7,
+              "is_home": false,
+              "drive_ended": false,
+              "end_reason": null,
+              "caller": null
+            },
+            "prediction": {
+              "p_pass": 0.32956188917160034,
+              "p_run": 0.6704381108283997,
+              "components": {
+                "A": {
+                  "p_pass": 0.4035302488209465,
+                  "p_run": 0.5964697511790535,
+                  "effective_n": 0.0,
+                  "weight": 0.0
+                },
+                "B": {
+                  "p_pass": 0.40186056776677953,
+                  "p_run": 0.5981394322332205,
+                  "effective_n": 0.09971703748565745,
+                  "weight": 0.0,
+                  "sample_basis": "verified caller"
+                },
+                "C": {
+                  "p_pass": 0.4035302488209465,
+                  "p_run": 0.5964697511790535,
+                  "effective_n": 2.0,
+                  "weight": 1.0
+                }
+              },
+              "ensemble_p_pass": 0.4035302488209465,
+              "selected_model": "xgboost"
+            },
+            "mass": 0.03573895870028316,
+            "children": []
+          }
+        },
+        {
+          "call": "run",
+          "outcome": {
+            "yards": 0,
+            "turnover": false,
+            "touchdown": false,
+            "safety": false,
+            "probability": 0.06140350877192982
+          },
+          "conditional_probability": 0.03433804004861597,
+          "node": {
+            "state": {
+              "down": 2,
+              "distance": 10,
+              "yardline_100": 75,
+              "score_differential": 0,
+              "game_seconds_remaining": 3570,
+              "offense": "ATL",
+              "defense": "MIN",
+              "previous_call": "run",
+              "personnel": null,
+              "offense_rest": 14,
+              "defense_rest": 7,
+              "is_home": false,
+              "drive_ended": false,
+              "end_reason": null,
+              "caller": null
+            },
+            "prediction": {
+              "p_pass": 0.6628220081329346,
+              "p_run": 0.33717799186706543,
+              "components": {
+                "A": {
+                  "p_pass": 0.681806594843016,
+                  "p_run": 0.318193405156984,
+                  "effective_n": 0.0,
+                  "weight": 0.0
+                },
+                "B": {
+                  "p_pass": 0.6843203933172141,
+                  "p_run": 0.31567960668278594,
+                  "effective_n": 0.19111517533465547,
+                  "weight": 0.0,
+                  "sample_basis": "verified caller"
+                },
+                "C": {
+                  "p_pass": 0.681806594843016,
+                  "p_run": 0.318193405156984,
+                  "effective_n": 10.0,
+                  "weight": 1.0
+                }
+              },
+              "ensemble_p_pass": 0.681806594843016,
+              "selected_model": "xgboost"
+            },
+            "mass": 0.03433804004861597,
+            "children": []
+          }
+        }
+      ]
+    },
+    "depth": 3,
+    "beam_width": 8,
+    "retained_mass": 0.04221252292743849,
+    "pruned_mass": 0.9577874770725615,
+    "scope": "Run or pass conditional on a scrimmage decision; simulated plays use 30 seconds."
+  }
+}

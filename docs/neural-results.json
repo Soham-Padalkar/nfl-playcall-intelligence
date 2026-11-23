@@ -1,0 +1,555 @@
+{
+  "config": {
+    "accumulation_steps": 2,
+    "batch_size": 128,
+    "epochs": 12,
+    "hidden_size": 48,
+    "history_size": 5,
+    "learning_rate": 0.001,
+    "seed": 85029
+  },
+  "cuda_build": "12.8",
+  "cutoff": "2026-11-23",
+  "dataset_version": "4626820e59837767",
+  "experiment_source_sha256": "3c70051343654f4a4d3027534456a18e8560cfea8b21e89c954c7702886c2b89",
+  "features": {
+    "categorical": [
+      "posteam",
+      "defteam",
+      "previous_call"
+    ],
+    "gru_history": "Earlier eligible plays in the same drive, with pre-snap features and observed calls.",
+    "numeric": [
+      "down",
+      "ydstogo",
+      "yardline_100",
+      "score_differential",
+      "game_seconds_remaining"
+    ]
+  },
+  "generated_at": "2026-11-23T08:28:36.566004+00:00",
+  "metrics": {
+    "gru": {
+      "accumulation_steps": 2,
+      "amp_dtype": "bfloat16",
+      "batch_size": 128,
+      "best_epoch": 5,
+      "device": "cuda",
+      "device_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+      "first_eligible_play": {
+        "accuracy": 0.5078299776286354,
+        "brier": 0.2523263692855835,
+        "calibration_error": 0.0404571516801847,
+        "drive_pass_share_mae": 0.49846198064768876,
+        "log_loss": 0.6979992985725403,
+        "n": 894,
+        "reliability": [
+          {
+            "bin": 1,
+            "n": 1,
+            "observed_pass": 0.0,
+            "predicted_pass": 0.10666689276695251
+          },
+          {
+            "bin": 2,
+            "n": 4,
+            "observed_pass": 0.75,
+            "predicted_pass": 0.2833610773086548
+          },
+          {
+            "bin": 3,
+            "n": 47,
+            "observed_pass": 0.40425531914893614,
+            "predicted_pass": 0.3735102713108063
+          },
+          {
+            "bin": 4,
+            "n": 630,
+            "observed_pass": 0.4650793650793651,
+            "predicted_pass": 0.45684242248535156
+          },
+          {
+            "bin": 5,
+            "n": 193,
+            "observed_pass": 0.40414507772020725,
+            "predicted_pass": 0.5288119912147522
+          },
+          {
+            "bin": 6,
+            "n": 13,
+            "observed_pass": 0.6153846153846154,
+            "predicted_pass": 0.6273033618927002
+          },
+          {
+            "bin": 7,
+            "n": 6,
+            "observed_pass": 0.16666666666666666,
+            "predicted_pass": 0.7242536544799805
+          }
+        ],
+        "top2_accuracy": 1.0
+      },
+      "oom_retries": [],
+      "opening_drives": {
+        "accuracy": 0.6314035087719299,
+        "brier": 0.21992821991443634,
+        "calibration_error": 0.02686352245901759,
+        "drive_pass_share_mae": 0.17599672497745317,
+        "log_loss": 0.6295787692070007,
+        "n": 5700,
+        "reliability": [
+          {
+            "bin": 0,
+            "n": 10,
+            "observed_pass": 0.6,
+            "predicted_pass": 0.08598951250314713
+          },
+          {
+            "bin": 1,
+            "n": 60,
+            "observed_pass": 0.3,
+            "predicted_pass": 0.15710590779781342
+          },
+          {
+            "bin": 2,
+            "n": 262,
+            "observed_pass": 0.3015267175572519,
+            "predicted_pass": 0.26002001762390137
+          },
+          {
+            "bin": 3,
+            "n": 551,
+            "observed_pass": 0.3720508166969147,
+            "predicted_pass": 0.3550433814525604
+          },
+          {
+            "bin": 4,
+            "n": 1345,
+            "observed_pass": 0.45427509293680296,
+            "predicted_pass": 0.4542449116706848
+          },
+          {
+            "bin": 5,
+            "n": 1100,
+            "observed_pass": 0.5136363636363637,
+            "predicted_pass": 0.5492271184921265
+          },
+          {
+            "bin": 6,
+            "n": 911,
+            "observed_pass": 0.5916575192096597,
+            "predicted_pass": 0.6496689319610596
+          },
+          {
+            "bin": 7,
+            "n": 679,
+            "observed_pass": 0.7378497790868925,
+            "predicted_pass": 0.7469719648361206
+          },
+          {
+            "bin": 8,
+            "n": 563,
+            "observed_pass": 0.8685612788632326,
+            "predicted_pass": 0.8474845290184021
+          },
+          {
+            "bin": 9,
+            "n": 219,
+            "observed_pass": 0.8949771689497716,
+            "predicted_pass": 0.9363629221916199
+          }
+        ],
+        "top2_accuracy": 1.0
+      },
+      "peak_allocated_mib": 27.46,
+      "validation_log_loss": 0.633695125579834
+    },
+    "league_mean": {
+      "first_eligible_play": {
+        "accuracy": 0.44966442953020136,
+        "brier": 0.26643079015628507,
+        "calibration_error": 0.13771150936216314,
+        "drive_pass_share_mae": 0.5087962354589629,
+        "log_loss": 0.7264292000972712,
+        "n": 894,
+        "reliability": [
+          {
+            "bin": 5,
+            "n": 894,
+            "observed_pass": 0.44966442953020136,
+            "predicted_pass": 0.5873759388923645
+          }
+        ],
+        "top2_accuracy": 1.0
+      },
+      "opening_drives": {
+        "accuracy": 0.5629824561403509,
+        "brier": 0.24662825221930154,
+        "calibration_error": 0.024393482752013584,
+        "drive_pass_share_mae": 0.15640294775636185,
+        "log_loss": 0.6864134160051698,
+        "n": 5700,
+        "reliability": [
+          {
+            "bin": 5,
+            "n": 5700,
+            "observed_pass": 0.5629824561403509,
+            "predicted_pass": 0.5873759388923645
+          }
+        ],
+        "top2_accuracy": 1.0
+      },
+      "validation_log_loss": 0.6860127818048476
+    },
+    "logistic": {
+      "first_eligible_play": {
+        "accuracy": 0.5,
+        "brier": 0.2588367685756736,
+        "calibration_error": 0.0718585246800081,
+        "drive_pass_share_mae": 0.4998096969418515,
+        "log_loss": 0.7130671624450423,
+        "n": 894,
+        "reliability": [
+          {
+            "bin": 0,
+            "n": 1,
+            "observed_pass": 0.0,
+            "predicted_pass": 0.08904956848586507
+          },
+          {
+            "bin": 1,
+            "n": 2,
+            "observed_pass": 0.5,
+            "predicted_pass": 0.1832097554208169
+          },
+          {
+            "bin": 2,
+            "n": 11,
+            "observed_pass": 0.36363636363636365,
+            "predicted_pass": 0.2681190711664374
+          },
+          {
+            "bin": 3,
+            "n": 104,
+            "observed_pass": 0.46153846153846156,
+            "predicted_pass": 0.3684192841469863
+          },
+          {
+            "bin": 4,
+            "n": 419,
+            "observed_pass": 0.4606205250596659,
+            "predicted_pass": 0.4516110644693204
+          },
+          {
+            "bin": 5,
+            "n": 272,
+            "observed_pass": 0.4485294117647059,
+            "predicted_pass": 0.5399372214189873
+          },
+          {
+            "bin": 6,
+            "n": 56,
+            "observed_pass": 0.35714285714285715,
+            "predicted_pass": 0.6423359966617878
+          },
+          {
+            "bin": 7,
+            "n": 23,
+            "observed_pass": 0.5652173913043478,
+            "predicted_pass": 0.7422400254768841
+          },
+          {
+            "bin": 8,
+            "n": 6,
+            "observed_pass": 0.16666666666666666,
+            "predicted_pass": 0.8505969546754444
+          }
+        ],
+        "top2_accuracy": 1.0
+      },
+      "opening_drives": {
+        "accuracy": 0.6273684210526316,
+        "brier": 0.22047206996327876,
+        "calibration_error": 0.040630059751808466,
+        "drive_pass_share_mae": 0.169256731561081,
+        "log_loss": 0.6322798213573643,
+        "n": 5700,
+        "reliability": [
+          {
+            "bin": 0,
+            "n": 12,
+            "observed_pass": 0.4166666666666667,
+            "predicted_pass": 0.08028942778655197
+          },
+          {
+            "bin": 1,
+            "n": 61,
+            "observed_pass": 0.29508196721311475,
+            "predicted_pass": 0.14684500868019665
+          },
+          {
+            "bin": 2,
+            "n": 210,
+            "observed_pass": 0.3,
+            "predicted_pass": 0.2616524446609128
+          },
+          {
+            "bin": 3,
+            "n": 668,
+            "observed_pass": 0.3997005988023952,
+            "predicted_pass": 0.35882124081996736
+          },
+          {
+            "bin": 4,
+            "n": 1120,
+            "observed_pass": 0.4455357142857143,
+            "predicted_pass": 0.4510528389519607
+          },
+          {
+            "bin": 5,
+            "n": 1022,
+            "observed_pass": 0.48336594911937375,
+            "predicted_pass": 0.5467966642136458
+          },
+          {
+            "bin": 6,
+            "n": 911,
+            "observed_pass": 0.5740944017563118,
+            "predicted_pass": 0.6500578727936308
+          },
+          {
+            "bin": 7,
+            "n": 803,
+            "observed_pass": 0.7185554171855542,
+            "predicted_pass": 0.7467778810029192
+          },
+          {
+            "bin": 8,
+            "n": 607,
+            "observed_pass": 0.8319604612850082,
+            "predicted_pass": 0.8485338759705733
+          },
+          {
+            "bin": 9,
+            "n": 286,
+            "observed_pass": 0.9020979020979021,
+            "predicted_pass": 0.9378362509361783
+          }
+        ],
+        "top2_accuracy": 1.0
+      },
+      "validation_log_loss": 0.6416083150367269
+    },
+    "mlp": {
+      "accumulation_steps": 2,
+      "amp_dtype": "bfloat16",
+      "batch_size": 128,
+      "best_epoch": 6,
+      "device": "cuda",
+      "device_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+      "first_eligible_play": {
+        "accuracy": 0.5100671140939598,
+        "brier": 0.25374919176101685,
+        "calibration_error": 0.056947916987825045,
+        "drive_pass_share_mae": 0.49682834646945834,
+        "log_loss": 0.7011340260505676,
+        "n": 894,
+        "reliability": [
+          {
+            "bin": 0,
+            "n": 1,
+            "observed_pass": 0.0,
+            "predicted_pass": 0.07064313441514969
+          },
+          {
+            "bin": 2,
+            "n": 8,
+            "observed_pass": 0.5,
+            "predicted_pass": 0.24707362055778503
+          },
+          {
+            "bin": 3,
+            "n": 147,
+            "observed_pass": 0.41496598639455784,
+            "predicted_pass": 0.3714357316493988
+          },
+          {
+            "bin": 4,
+            "n": 542,
+            "observed_pass": 0.474169741697417,
+            "predicted_pass": 0.44783666729927063
+          },
+          {
+            "bin": 5,
+            "n": 167,
+            "observed_pass": 0.40119760479041916,
+            "predicted_pass": 0.5336232781410217
+          },
+          {
+            "bin": 6,
+            "n": 23,
+            "observed_pass": 0.5217391304347826,
+            "predicted_pass": 0.6326038837432861
+          },
+          {
+            "bin": 7,
+            "n": 6,
+            "observed_pass": 0.16666666666666666,
+            "predicted_pass": 0.7468221783638
+          }
+        ],
+        "top2_accuracy": 1.0
+      },
+      "oom_retries": [],
+      "opening_drives": {
+        "accuracy": 0.6317543859649123,
+        "brier": 0.21899834275245667,
+        "calibration_error": 0.034804055588810084,
+        "drive_pass_share_mae": 0.16277418629459856,
+        "log_loss": 0.6269947290420532,
+        "n": 5700,
+        "reliability": [
+          {
+            "bin": 0,
+            "n": 6,
+            "observed_pass": 0.5,
+            "predicted_pass": 0.08111921697854996
+          },
+          {
+            "bin": 1,
+            "n": 55,
+            "observed_pass": 0.3090909090909091,
+            "predicted_pass": 0.1529269814491272
+          },
+          {
+            "bin": 2,
+            "n": 101,
+            "observed_pass": 0.26732673267326734,
+            "predicted_pass": 0.25911837816238403
+          },
+          {
+            "bin": 3,
+            "n": 548,
+            "observed_pass": 0.3613138686131387,
+            "predicted_pass": 0.3628201484680176
+          },
+          {
+            "bin": 4,
+            "n": 1342,
+            "observed_pass": 0.43591654247391953,
+            "predicted_pass": 0.4507262408733368
+          },
+          {
+            "bin": 5,
+            "n": 1121,
+            "observed_pass": 0.487957181088314,
+            "predicted_pass": 0.5484461188316345
+          },
+          {
+            "bin": 6,
+            "n": 1082,
+            "observed_pass": 0.6016635859519408,
+            "predicted_pass": 0.6504477262496948
+          },
+          {
+            "bin": 7,
+            "n": 849,
+            "observed_pass": 0.7667844522968198,
+            "predicted_pass": 0.7478044033050537
+          },
+          {
+            "bin": 8,
+            "n": 505,
+            "observed_pass": 0.8910891089108911,
+            "predicted_pass": 0.8420687913894653
+          },
+          {
+            "bin": 9,
+            "n": 91,
+            "observed_pass": 0.8791208791208791,
+            "predicted_pass": 0.9262621402740479
+          }
+        ],
+        "top2_accuracy": 1.0
+      },
+      "peak_allocated_mib": 17.68,
+      "validation_log_loss": 0.6329802870750427
+    }
+  },
+  "notes": [
+    "Later decisions use observed pre-snap states and call history. First eligible plays measure cold-start performance.",
+    "Metrics pool all league test games. They do not estimate the outcome of a particular matchup.",
+    "Drive pass-share error compares historical predictions conditional on observed game states with observed pass shares.",
+    "The 2026 season is limited to recorded games available at the cutoff. Source records can be revised."
+  ],
+  "python": "3.12.16",
+  "selected_by_validation_log_loss": "mlp",
+  "source_files": {
+    "pbp_2022": {
+      "retrieved_at": "2026-11-23T08:12:26.982646+00:00",
+      "rows": 49434,
+      "sha256": "167dff9290b11a47822157443af586877b38de1b6a90e41f95ac52e524cf4bb3",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2022.parquet"
+    },
+    "pbp_2023": {
+      "retrieved_at": "2026-11-23T08:12:27.430861+00:00",
+      "rows": 49665,
+      "sha256": "e8200fde627d460975cfe5d91c355702fcf931b747671d4e5eb972270265ec88",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2023.parquet"
+    },
+    "pbp_2024": {
+      "retrieved_at": "2026-11-23T08:12:28.751712+00:00",
+      "rows": 49492,
+      "sha256": "6e6996601f9c29dd10c8d6a15eca255b836ba1dd4718f12bfb69137da1e07c1e",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2024.parquet"
+    },
+    "pbp_2025": {
+      "retrieved_at": "2026-11-23T08:12:30.720818+00:00",
+      "rows": 48771,
+      "sha256": "6b7f629136def21702592bf7d70876d746aafe3207c675d9920632e9d7fd6d2d",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2025.parquet"
+    },
+    "pbp_2026": {
+      "retrieved_at": "2026-11-23T08:12:33.479930+00:00",
+      "rows": 28296,
+      "sha256": "df5352a10fd828530a339e8da60e747a8dac69af36d665f61a1812347cc4975b",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2026.parquet"
+    }
+  },
+  "splits": {
+    "test": {
+      "first_game_date": "2025-09-04",
+      "games": 447,
+      "last_game_date": "2026-11-22",
+      "opening_drives": 894,
+      "plays": 5700,
+      "seasons": [
+        2025,
+        2026
+      ]
+    },
+    "train": {
+      "first_game_date": "2022-09-08",
+      "games": 569,
+      "last_game_date": "2024-02-11",
+      "opening_drives": 1138,
+      "plays": 7256,
+      "seasons": [
+        2022,
+        2023
+      ]
+    },
+    "validation": {
+      "first_game_date": "2024-09-05",
+      "games": 285,
+      "last_game_date": "2025-02-09",
+      "opening_drives": 570,
+      "plays": 3556,
+      "seasons": [
+        2024
+      ]
+    }
+  },
+  "target": "Pass or run among eligible scrimmage decisions on each offense's opening drive",
+  "torch": "2.7.1+cu128"
+}
