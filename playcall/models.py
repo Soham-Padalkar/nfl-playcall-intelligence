@@ -489,7 +489,7 @@ def _usage_distributions(opening, offense):
         names = opportunities[column].dropna()
         if len(names) >= 5:
             result[column] = {
-                "label": f"{role} · {offense}, latest {len(game_ids)} opening drives",
+                "label": f"{role} Â· {offense}, latest {len(game_ids)} opening drives",
                 "n": len(names),
                 "coverage": len(names) / len(opportunities),
                 "probabilities": names.value_counts(normalize=True).to_dict(),
@@ -582,7 +582,8 @@ class PlaycallModels:
             )
             interval = [float(midpoint - radius), float(midpoint + radius)]
         probability.update(
-            tactical=_tactical_distributions(sample) | _usage_distributions(self.opening, frame.iloc[0]["posteam"]),
+            tactical=_tactical_distributions(sample)
+            | _usage_distributions(self.opening, frame.iloc[0]["posteam"]),
             uncertainty={
                 "n": n,
                 "basis": basis,
