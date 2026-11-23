@@ -1,0 +1,12 @@
+streamlit>=1.45,<2
+plotly>=6,<7
+pandas>=2.2,<3
+numpy>=1.26,<3
+scikit-learn>=1.6,<2
+duckdb>=1.2,<2
+pyarrow>=18
+requests>=2.32
+joblib>=1.4
+opencv-python-headless>=4.10
+pytest>=8
+ruff>=0.11
