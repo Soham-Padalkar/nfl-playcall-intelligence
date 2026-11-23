@@ -1,0 +1,5 @@
+name = "visual_reviewer"
+description = "Review interface and video overlays."
+model = "gpt-6.1-terra"
+model_reasoning_effort = "medium"
+developer_instructions = "Inspect real screenshots at desktop and narrow widths. Report specific navigation, clarity, and annotation issues."
