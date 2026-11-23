@@ -61,8 +61,11 @@ def test_freeze_and_adaptive_entry(monkeypatch, tmp_path):
     }
     monkeypatch.setattr(ui, "context", lambda: {"game": game})
     monkeypatch.setattr(ui, "get_model", TestForecastModel)
+    monkeypatch.setattr(ui, "target_schedule", lambda game_id: {"away_rest": 14, "home_rest": 7})
     app.sidebar.radio[0].set_value("Opening-Drive Predictor").run()
     assert not app.exception
+    rest = {field.label: field.value for field in app.number_input if "days of rest" in field.label}
+    assert rest == {"Atlanta days of rest": 14, "Minnesota days of rest": 7}
     branch = next(box for box in app.selectbox if box.label == "Show a branch")
     assert len(branch.options) > 1
     branch.select_index(1).run()
@@ -72,6 +75,8 @@ def test_freeze_and_adaptive_entry(monkeypatch, tmp_path):
     forecasts = list_forecasts(ui_forecast.PREDICTIONS, game_id="test-game", kind="pregame")
     assert len(forecasts) == 1
     assert forecasts[0]["forecast"]["root"]["prediction"]["p_pass"] == 0.6
+    assert forecasts[0]["state"]["offense_rest"] == 14
+    assert forecasts[0]["state"]["defense_rest"] == 7
 
     # Exercise the post-kickoff UI while preserving the frozen record.
     game["kickoff_utc"] = (datetime.now(UTC) - timedelta(minutes=1)).isoformat()

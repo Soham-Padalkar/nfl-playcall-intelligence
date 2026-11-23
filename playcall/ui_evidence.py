@@ -11,12 +11,24 @@ import streamlit as st
 from playcall import ui
 from playcall.data import DataStore
 
+INJURY_FIELDS = {
+    "week": "Week",
+    "full_name": "Player",
+    "position": "Position",
+    "report_primary_injury": "Injury",
+    "report_status": "Game status",
+    "practice_status": "Practice status",
+}
+
 
 @st.cache_data(max_entries=4, show_spinner=False)
-def _roster_records(root, dataset_version, season, cutoff):
+def _roster_records(root, dataset_version, season, week, cutoff):
     store = DataStore(root)
     teams = ["ATL", "MIN"]
     injuries = store.injuries([season])
+    if "season_type" in injuries:
+        injuries = injuries.loc[injuries["season_type"].eq("REG")]
+    current = injuries.loc[injuries["week"].eq(week)] if not injuries.empty else injuries
     depth = store.depth_charts([season])
     schedule = store.schedules([season])
     if not depth.empty and {"dt", "team", "pos_rank"}.issubset(depth):
@@ -40,22 +52,38 @@ def _roster_records(root, dataset_version, season, cutoff):
                 for side in ("home", "away")
             ]
         ).drop_duplicates()
-        injuries = injuries.loc[injuries["team"].isin(teams)].merge(team_weeks, on=["team", "week"])
+        injuries = injuries.loc[injuries["team"].isin(teams) & injuries["week"].lt(week)].merge(
+            team_weeks, on=["team", "week"]
+        )
         injuries = injuries.loc[
             injuries["week"].eq(injuries.groupby("team")["week"].transform("max"))
         ]
     else:
         injuries = pd.DataFrame()
-    return depth, injuries
+    return depth, injuries, current
+
+
+def _injury_table(injuries, team, empty_message):
+    if not injuries.empty and team in injuries["team"].values:
+        fields = {key: value for key, value in INJURY_FIELDS.items() if key in injuries}
+        st.dataframe(
+            injuries.loc[injuries["team"].eq(team), list(fields)].rename(columns=fields),
+            width="stretch",
+            hide_index=True,
+        )
+    else:
+        st.info(empty_message)
 
 
 def overview():
     context = ui.context()
     game = context["game"]
     kickoff = datetime.fromisoformat(game["kickoff_utc"]).astimezone(ZoneInfo("America/Chicago"))
+    schedule = ui.target_schedule(game["game_id"])
+    week = int(schedule.get("week", game["game_id"].split("_")[1]))
     event = f"{kickoff:%A, %B %d, %Y · %I:%M %p %Z} · {game['stadium']}"
     st.markdown(
-        f'<div class="matchup-banner"><small>WEEK 12 · NFL REGULAR SEASON</small>'
+        f'<div class="matchup-banner"><small>WEEK {week} · NFL REGULAR SEASON</small>'
         f"<strong>Atlanta Falcons at Minnesota Vikings</strong><span>{escape(event)}</span></div>",
         unsafe_allow_html=True,
     )
@@ -79,8 +107,11 @@ def overview():
     if model:
         from playcall.simulation import GameState
 
-        ui.show_prediction(model.predict(GameState()))
+        away_rest, home_rest = ui.scheduled_rest(game["game_id"])
+        ui.show_prediction(model.predict(GameState(offense_rest=away_rest, defense_rest=home_rest)))
         st.caption("Assumed starting state · 1st and 10 at Atlanta’s 25, tied score, 60:00 left")
+        if away_rest is not None and home_rest is not None:
+            st.caption(f"Scheduled rest · Atlanta {away_rest} days · Minnesota {home_rest} days")
     else:
         st.info("Train the local model to generate an opening-possession forecast.")
     st.subheader("Roster and injury context")
@@ -93,12 +124,13 @@ def overview():
     )
     with st.expander("Latest cached lineup and injury records"):
         before = min(pd.Timestamp.now(tz=UTC), pd.Timestamp(game["kickoff_utc"]))
-        depth, injuries = _roster_records(
-            ui.DATA, manifest["dataset_version"], kickoff.year, before.floor("h")
+        depth, injuries, current = _roster_records(
+            ui.DATA, manifest["dataset_version"], kickoff.year, week, before.floor("h")
         )
         team = st.selectbox("Team records", [game["away"], game["home"]])
         st.caption(
-            "Depth ranks are roster projections. Injury reports refer to the source week. Week 12 availability requires game-week confirmation."
+            "Depth ranks are roster projections. Injury reports show reported status by week. "
+            "The final lineup depends on game-day availability."
         )
         st.markdown("**First on depth chart**")
         if not depth.empty and team in depth["team"].values:
@@ -115,23 +147,19 @@ def overview():
             )
         else:
             st.info("No dated depth chart is cached for this team.")
-        st.markdown("**Injury reports from the latest completed game week with a report**")
-        if not injuries.empty and team in injuries["team"].values:
-            fields = {
-                "week": "Week",
-                "full_name": "Player",
-                "position": "Position",
-                "report_primary_injury": "Injury",
-                "report_status": "Game status",
-                "practice_status": "Practice status",
-            }
-            st.dataframe(
-                injuries.loc[injuries["team"].eq(team), list(fields)].rename(columns=fields),
-                width="stretch",
-                hide_index=True,
+        st.markdown(f"**Week {week} injury reports cached before kickoff**")
+        source = manifest["sources"].get(f"injuries_{kickoff.year}", {})
+        retrieved = pd.to_datetime(source.get("retrieved_at"), utc=True, errors="coerce")
+        if pd.notna(retrieved) and retrieved <= before and retrieved < kickoff:
+            _injury_table(current, team, f"No Week {week} injury report is cached for this team.")
+            st.caption(
+                f"nflverse injuries · Local retrieval {retrieved:%Y-%m-%d %H:%M UTC}. "
+                f"The source supplies a week and status. [Injury data file]({source['url']})"
             )
         else:
-            st.info("No completed-week injury report is cached for this team.")
+            st.info("No injury file with a verified pregame retrieval time is available.")
+        st.markdown("**Injury reports from the latest earlier completed week**")
+        _injury_table(injuries, team, "No completed-week injury report is cached for this team.")
     with st.expander("Data coverage and retrieval dates"):
         ui.source_table(manifest)
 

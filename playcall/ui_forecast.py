@@ -32,8 +32,10 @@ def _state_inputs(include_depth=True):
     )
     with st.expander("Rest days and tree size" if include_depth else "Rest days"):
         cols = st.columns(3 if include_depth else 2)
-        offense_rest = cols[0].number_input("Atlanta days of rest", 0, 24, value=None)
-        defense_rest = cols[1].number_input("Minnesota days of rest", 0, 24, value=None)
+        game_id = ui.context()["game"]["game_id"]
+        away_rest, home_rest = ui.scheduled_rest(game_id)
+        offense_rest = cols[0].number_input("Atlanta days of rest", 0, 24, value=away_rest)
+        defense_rest = cols[1].number_input("Minnesota days of rest", 0, 24, value=home_rest)
         depth = cols[2].slider("Plays to forecast", 1, 5, 3) if include_depth else 3
     state = GameState(
         down=down,

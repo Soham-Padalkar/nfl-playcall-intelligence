@@ -57,6 +57,25 @@ def get_manifest():
     return DataStore(DATA).manifest()
 
 
+@st.cache_data(show_spinner=False, max_entries=4)
+def _target_schedule(root, dataset_version, game_id):
+    schedules = DataStore(root).schedules()
+    if schedules.empty:
+        return {}
+    match = schedules.loc[schedules["game_id"].eq(game_id)]
+    return match.iloc[0].to_dict() if not match.empty else {}
+
+
+def target_schedule(game_id):
+    return _target_schedule(DATA, get_manifest()["dataset_version"], game_id)
+
+
+def scheduled_rest(game_id):
+    game = target_schedule(game_id)
+    days = (game.get("away_rest"), game.get("home_rest"))
+    return tuple(int(value) if pd.notna(value) and 0 <= value <= 24 else None for value in days)
+
+
 @st.cache_data(show_spinner="Reading cached plays…", max_entries=2)
 def _plays(root, dataset_version):
     return DataStore(root).plays()

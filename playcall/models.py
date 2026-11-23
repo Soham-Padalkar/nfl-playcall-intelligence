@@ -454,7 +454,7 @@ def _tactical_distributions(sample):
             selected = sample.loc[sample["call"].eq("run")]
         if label in {"pass_location", "pass_length", "route", "is_screen_pass"}:
             selected = sample.loc[sample["call"].eq("pass")]
-        values = selected[label].dropna()
+        values = selected[label].replace(r"^\s*$", np.nan, regex=True).dropna()
         if values.empty:
             continue
         if label in TACTICAL_LABELS:
@@ -486,7 +486,7 @@ def _usage_distributions(opening, offense):
         if column not in recent:
             continue
         opportunities = recent.loc[recent["call"].eq(call)]
-        names = opportunities[column].dropna()
+        names = opportunities[column].astype("string").str.strip().replace("", pd.NA).dropna()
         if len(names) >= 5:
             result[column] = {
                 "label": f"{role} · {offense}, latest {len(game_ids)} opening drives",
