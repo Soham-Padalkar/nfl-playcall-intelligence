@@ -154,8 +154,8 @@ def predictor():
             )
 
 
-def _observed_prediction(state):
-    from playcall.presnap import OBSERVABLES, features
+def _observed_prediction(state, recorded_calls=None):
+    from playcall.presnap import HISTORY, OBSERVABLES, features, play_history
 
     st.caption("Enter only the setup you can see for this play. Leave uncertain fields blank.")
     report_path = ui.ROOT / "docs" / "presnap-results.json"
@@ -172,7 +172,8 @@ def _observed_prediction(state):
             "starting_hash": {"L": "Left", "M": "Middle", "R": "Right"},
             "is_motion": {"True": "Observed", "False": "No motion observed before the snap"},
         }
-        for index, field in enumerate(fields):
+        visible = [field for field in fields if field not in HISTORY]
+        for index, field in enumerate(visible):
             column = columns[index % len(columns)]
             if field in options:
                 labels = options[field]
@@ -183,15 +184,35 @@ def _observed_prediction(state):
                 )
             elif field in ("n_defense_box", "n_offense_backfield"):
                 inputs[field] = column.number_input(OBSERVABLES[field], 0, 11, value=None)
+            elif field == "offense_personnel":
+                inputs[field] = column.text_input(OBSERVABLES[field], placeholder="11, 12, 21")
+            elif field == "defense_personnel":
+                inputs[field] = column.text_input(OBSERVABLES[field], placeholder="4-2-5")
             else:
                 inputs[field] = column.text_input(OBSERVABLES[field])
+        if recorded_calls is None:
+            st.caption(
+                "Optional. Enter previous calls by the same offense in this game, oldest first."
+            )
+            recent = [
+                col.selectbox(f"Previous call {i}", [None, "run", "pass"])
+                for i, col in enumerate(st.columns(3), start=1)
+            ]
+        else:
+            recent = [call for call in recorded_calls if call in {"run", "pass"}][-3:]
+            if recent:
+                st.caption("Earlier calls from this game · " + ", ".join(recent))
+        inputs.update(play_history(recent))
         ready = st.form_submit_button("Update run/pass probabilities")
     if not ready:
         return
-    if not any(value not in (None, "") for value in inputs.values()):
-        st.info("Enter at least one observation.")
-        return
-    model = _load_observed_model(ui.get_manifest()["dataset_version"], fields, report["strength"])
+    model = _load_observed_model(
+        str(ui.DATA.resolve()),
+        ui.get_manifest()["dataset_version"],
+        fields,
+        report["strength"],
+        report["personnel_weight"],
+    )
     if model is None:
         st.info("Load the 2022 and 2023 play-by-play and charting data first.")
         return
@@ -209,11 +230,21 @@ def _observed_prediction(state):
     )
     p_pass = float(model.predict(row)[0])
     ui.show_prediction({"p_pass": p_pass, "p_run": 1 - p_pass})
+    context = [
+        f"{OBSERVABLES[field]}: {row.iloc[0][field]}"
+        for field in ("offense_personnel", "defense_personnel")
+        if pd.notna(row.iloc[0][field])
+    ]
+    if context:
+        st.caption("Personnel entered · " + " · ".join(context))
+    for field in ("offense_personnel", "defense_personnel"):
+        if inputs.get(field, "").strip() and pd.isna(row.iloc[0][field]):
+            st.warning(f"Check the format for {OBSERVABLES[field].lower()}.")
     band = report["test_at_validated_threshold"]
     if (
         band
         and (band["game_bootstrap_lower_95"] or 0) >= 0.90
-        and row[list(fields)].notna().all(axis=None)
+        and row[report["confidence_fields"]].notna().all(axis=None)
     ):
         if max(p_pass, 1 - p_pass) >= band["threshold"]:
             st.caption(
@@ -224,19 +255,17 @@ def _observed_prediction(state):
 
 
 @st.cache_resource(show_spinner="Fitting the pre-snap model…", max_entries=2)
-def _load_observed_model(dataset_version, fields, strength):
+def _load_observed_model(data_root, dataset_version, fields, strength, personnel_weight):
     from playcall.data import DataStore
-    from playcall.presnap import ObservedModel, features
+    from playcall.presnap import ObservedModel, training_examples
 
-    data = DataStore(ui.DATA).plays([2022, 2023])
+    data = DataStore(data_root).plays([2022, 2023])
     if data.empty:
         return None
-    opening = data.loc[data["opening_drive"]]
+    opening = training_examples(data)
     if opening.empty or set(opening["season"]) != {2022, 2023}:
         return None
-    return ObservedModel(
-        features(opening.assign(target=opening["call"].eq("pass"))), fields, strength
-    )
+    return ObservedModel(opening, fields, strength, personnel_weight)
 
 
 def _state_line(state):
@@ -439,6 +468,8 @@ def live():
     pending = state_record["forecast"]["root"]["prediction"] if state_record else None
     if pending:
         ui.show_prediction(pending)
+    with st.expander("Update from the visible setup"):
+        _observed_prediction(state, [event["actual"]["call"] for event in events])
     if model is None:
         st.info(
             "Train a model from the cached data to record a play and generate the next adaptive forecast."

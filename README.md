@@ -76,8 +76,8 @@ The local task runs at 6 a.m. through December 1, 2026. It requires this checkou
 
 ### Update a prediction from the visible setup
 
-In **Opening-Drive Predictor**, expand **Update from the visible setup**. Enter the quarterback alignment, defenders in the box, players in the backfield and any motion you observed. The panel predicts the current snap. It uses the setup at or just before the snap. Its accuracy depends on seeing and recording those cues correctly.
+In **Opening-Drive Predictor**, expand **Update from the visible setup**. Enter the quarterback alignment and personnel groups. Use two digits for offensive personnel, such as 12 for one running back and two tight ends. Enter defensive personnel as linemen, linebackers and defensive backs, such as 4-2-5. Enter up to three previous calls by that offense in the same game, oldest first. The same panel on **Live Prediction & Evaluation** uses the selected game log as its source of prior calls.
 
-The pre-snap backtest got 71.25% of all eligible calls right. Its high-confidence group reached 92.49% accuracy on 18.68% of plays. The threshold was set on 2024 games before evaluating later games. Reproduce the comparison with `python -m playcall.presnap`. [Pre-snap results](docs/presnap-results.json)
+The pre-snap backtest got 71.40% of all eligible calls right. Its high-confidence group reached 94.07% accuracy on 8.58% of plays. Reproduce the comparison with `python -m playcall.presnap`. [Pre-snap results](docs/presnap-results.json)
 
 Across 27 held-out Atlanta opening drives, a separate frozen replay predicted the first call correctly 15 times. A league first-call baseline was correct 18 times. Run `python -m playcall.replay --as-of 2026-11-23 --output models/replay-results.json` to reproduce this comparison. The release includes the [tabular evaluation](docs/backtest.json), [frozen-drive evaluation](docs/replay-results.json), [GPU experiment](docs/neural-results.json), [cloud training notebook](notebooks/neural-opening-drive.ipynb) and [predictor screenshot](docs/opening-drive-predictor.png).
