@@ -6,7 +6,7 @@ import pytest
 from streamlit.testing.v1 import AppTest
 
 from playcall import ui, ui_forecast
-from playcall.presnap import ObservedModel, covered, features
+from playcall.presnap import PERSONNEL_WEIGHT, ObservedModel, covered, features, with_game_history
 
 
 def test_observed_alignment_updates_probability_and_missing_values_fall_back():
@@ -35,9 +35,51 @@ def test_confidence_group_requires_complete_observations():
     assert result["game_bootstrap_lower_95"] is None
 
 
+def test_history_uses_only_earlier_calls_by_the_same_offense_and_game():
+    rows = [
+        ("a", 1, "ATL", "run"),
+        ("a", 2, "MIN", "pass"),
+        ("a", 3, "ATL", "pass"),
+        ("a", 4, "ATL", "run"),
+        ("a", 5, "ATL", "pass"),
+        ("b", 1, "ATL", "pass"),
+    ]
+    plays = pd.DataFrame(rows, columns=["game_id", "play_id", "posteam", "call"]).iloc[::-1]
+    result = with_game_history(plays).set_index(["game_id", "play_id"])
+    assert pd.isna(result.loc[("a", 1), "recent_same_game"])
+    assert pd.isna(result.loc[("a", 2), "recent_same_game"])
+    assert result.loc[("a", 5), "recent_same_game"] == "RPR"
+    assert result.loc[("a", 5), "previous_same_game"] == "R"
+    assert pd.isna(result.loc[("b", 1), "recent_same_game"])
+
+
+def test_personnel_gets_more_weight_and_accepts_charted_position_counts():
+    base = {"down": 1, "ydstogo": 10, "yardline_100": 75, "qb_location": "S"}
+    raw_offense = "1 C, 2 G, 1 QB, 1 RB, 2 T, 1 TE, 3 WR"
+    raw_defense = "3 CB, 2 DE, 2 DT, 1 FS, 1 MLB, 1 OLB, 1 SS"
+    train = features(
+        pd.DataFrame(
+            [{**base, "offense_personnel": raw_offense, "target": True}] * 40
+            + [{**base, "offense_personnel": "12", "target": False}] * 40
+        )
+    )
+    fields = ("qb_location", "offense_personnel")
+    query = features(
+        pd.DataFrame([{**base, "offense_personnel": "11", "defense_personnel": raw_defense}])
+    )
+    assert query.iloc[0]["defense_personnel"] == "4-2-5"
+    assert (
+        ObservedModel(train, fields, 32, PERSONNEL_WEIGHT).predict(query)[0]
+        > (ObservedModel(train, fields, 32).predict(query)[0])
+    )
+
+
 def test_dashboard_uses_observed_alignment(monkeypatch):
     def predict(model_input):
-        assert model_input.iloc[0]["qb_location"] == "S"
+        row = model_input.iloc[0]
+        assert row["qb_location"] == "S"
+        assert row["offense_personnel"] == "11"
+        assert row["recent_same_game"] == "RPP"
         return np.array([0.88])
 
     monkeypatch.setattr(ui, "get_manifest", lambda: {"dataset_version": "test"})
@@ -48,12 +90,17 @@ def test_dashboard_uses_observed_alignment(monkeypatch):
         """
 from types import SimpleNamespace
 from playcall.ui_forecast import _observed_prediction
-_observed_prediction(SimpleNamespace(down=1, distance=10, yardline_100=75))
+_observed_prediction(
+    SimpleNamespace(down=1, distance=10, yardline_100=75), ["run", "pass", "pass"]
+)
 """
     ).run()
     assert not app.exception
     next(widget for widget in app.selectbox if widget.label == "Quarterback alignment").set_value(
         "S"
+    )
+    next(widget for widget in app.text_input if widget.label == "Offensive personnel").set_value(
+        "11"
     )
     app.button[0].click().run()
     assert not app.exception

@@ -2,19 +2,20 @@
 
 ## Forecast from the visible setup
 
-The optional pre-snap predictor uses down, distance, field position and four observations from FTN Data via nflverse. They are QB alignment, defenders in the box, players in the backfield and motion. The validation also considered field hash, formation and both personnel groups. The selected configuration had the lowest validation log loss. For rare setups, the model pulls its estimate toward broader historical rates. Missing fields allow broader estimates. [FTN charting definitions](https://nflreadr.nflverse.com/articles/dictionary_ftn_charting.html)
+The pre-snap predictor uses down, distance, field position, quarterback alignment, offensive personnel, defensive personnel and the last three eligible run or pass calls by the same offense in the same game. It uses each archived call only for later plays. The evaluator considered adding defenders in the box, offensive backfield count and motion. Validation selected the configuration with alignment, personnel and play history. [FTN charting definitions](https://nflreadr.nflverse.com/articles/dictionary_ftn_charting.html)
 
-The pre-snap experiment fit on 2022–23 and selected the input set, shrinkage and confidence threshold on 2024. It evaluated on games played from September 2025 through November 22, 2026. The held-out test used the archived charted observations for each snap. An operator needs to see those observations to use the same forecast conditions. Coverage can be lower with broadcast footage. The 2026 participation cache lacks the detailed formation and personnel labels.
+Personnel groups update the forecast using historical counts in the same situation and alignment. Each matching personnel example has four times the weight of one prior example in that update. Counts with little support still move the estimate by less than counts with many matches. Offensive personnel uses running back and tight end counts, including fullbacks with running backs. Defensive personnel uses defensive line, linebacker and defensive back counts. The 2026 participation file was missing, so the retrospective 2026 rows use alignment and any available prior calls. Live users can enter observed personnel even when the file is missing.
 
-| Held-out result | Correct calls | Accuracy |
+The experiment fit on 2022–23 and selected the input set, shrinkage and confidence threshold on 2024. It evaluated on separate games from September 2025 through November 22, 2026. The comparison model is the previous pre-snap model with alignment, box count, backfield count and motion.
+
+| Held-out result | Previous model | Personnel and history |
 | --- | ---: | ---: |
-| All eligible calls | 4,061 / 5,700 | 71.25% |
-| All Atlanta calls | 97 / 124 | 78.23% |
-| Atlanta first eligible snaps | 21 / 27 | 77.78% |
-| League high-confidence group | 985 / 1,065 | 92.49% |
-| Atlanta high-confidence group | 25 / 26 | 96.15% |
+| All eligible calls | 4,061 / 5,700 | 4,070 / 5,700 |
+| Calls after an earlier eligible call | 3,436 / 4,806 | 3,441 / 4,806 |
+| Atlanta calls | 97 / 124 | 96 / 124 |
+| Atlanta first eligible snaps | 21 / 27 | 21 / 27 |
 
-The high-confidence rule requires all four observations and a model probability of at least 85% for the predicted class. The group covered 18.68% of the league test plays. A bootstrap that resampled entire games gave a 90.92% lower bound for its league accuracy. The Atlanta group had 21 games and offers limited evidence about another matchup. The frozen pregame forecast uses information available before kickoff. [Pre-snap experiment](docs/presnap-results.json)
+The updated confidence rule requires observed QB alignment and both personnel groups, plus a model probability of at least 90% for the predicted class. It achieved 94.07% accuracy on 489 calls, or 8.58% of the league test plays. A bootstrap that resampled whole games gave a 91.90% lower bound. Coverage depends on seeing the personnel. The frozen pregame forecast uses information available before kickoff. [Pre-snap experiment](docs/presnap-results.json)
 
 The production target is the offensive choice between a run and a dropback on an eligible opening-drive scrimmage play. The population includes both offenses in regular-season and playoff games present in the dataset. The model can support scenario exploration by an analyst. It has no validation for prediction of an exact playbook call or personnel substitution.
 

@@ -1,13 +1,20 @@
 {
+  "confidence_fields": [
+    "qb_location",
+    "offense_personnel",
+    "defense_personnel"
+  ],
   "cutoff": "2026-11-22",
   "dataset_version": "d0f82edfbbb4cf91",
   "fields": [
     "qb_location",
-    "n_defense_box",
-    "n_offense_backfield",
-    "is_motion"
+    "previous_same_game",
+    "recent_same_game",
+    "offense_personnel",
+    "defense_personnel"
   ],
-  "selected": "Alignment, box, backfield and motion",
+  "personnel_weight": 4,
+  "selected": "Alignment and last three calls with personnel",
   "split": {
     "test": {
       "games": 447,
@@ -22,220 +29,308 @@
       "plays": 3556
     }
   },
-  "strength": 32,
+  "strength": 80,
   "test": {
     "2025": {
       "observed": {
+        "accuracy": 0.7150480256136607,
+        "correct": 2680,
+        "log_loss": 0.5587635183693712,
+        "n": 3748,
+        "wilson_lower_95": 0.7003821616735681
+      },
+      "situation": {
+        "accuracy": 0.6173959445037354,
+        "correct": 2314,
+        "log_loss": 0.6061564214658204,
+        "n": 3748,
+        "wilson_lower_95": 0.6017231233733707
+      },
+      "without_personnel_or_history": {
         "accuracy": 0.7097118463180363,
         "correct": 2660,
         "log_loss": 0.5585647085040478,
         "n": 3748,
         "wilson_lower_95": 0.694971420859666
-      },
-      "situation": {
-        "accuracy": 0.6173959445037354,
-        "correct": 2314,
-        "log_loss": 0.6009244082470266,
-        "n": 3748,
-        "wilson_lower_95": 0.6017231233733707
       }
     },
     "2026": {
       "observed": {
+        "accuracy": 0.7120901639344263,
+        "correct": 1390,
+        "log_loss": 0.5575308901018824,
+        "n": 1952,
+        "wilson_lower_95": 0.6916021431726904
+      },
+      "situation": {
+        "accuracy": 0.6132172131147541,
+        "correct": 1197,
+        "log_loss": 0.6056872924642307,
+        "n": 1952,
+        "wilson_lower_95": 0.5914097875856843
+      },
+      "without_personnel_or_history": {
         "accuracy": 0.7177254098360656,
         "correct": 1401,
         "log_loss": 0.5593047335843676,
         "n": 1952,
         "wilson_lower_95": 0.6973449510238576
+      }
+    },
+    "After an actual earlier call": {
+      "observed": {
+        "accuracy": 0.715980024968789,
+        "correct": 3441,
+        "log_loss": 0.5483861509826561,
+        "n": 4806,
+        "wilson_lower_95": 0.7030620671556373
       },
       "situation": {
-        "accuracy": 0.6132172131147541,
-        "correct": 1197,
-        "log_loss": 0.5997783646319764,
-        "n": 1952,
-        "wilson_lower_95": 0.5914097875856843
+        "accuracy": 0.6462754889721182,
+        "correct": 3106,
+        "log_loss": 0.589523722019065,
+        "n": 4806,
+        "wilson_lower_95": 0.6326457664063823
+      },
+      "without_personnel_or_history": {
+        "accuracy": 0.7149396587598835,
+        "correct": 3436,
+        "log_loss": 0.5474208377579293,
+        "n": 4806,
+        "wilson_lower_95": 0.7020085039833495
       }
     },
     "Atlanta": {
       "observed": {
+        "accuracy": 0.7741935483870968,
+        "correct": 96,
+        "log_loss": 0.4865503978699675,
+        "n": 124,
+        "wilson_lower_95": 0.6930081708536336
+      },
+      "situation": {
+        "accuracy": 0.5887096774193549,
+        "correct": 73,
+        "log_loss": 0.5906868203884065,
+        "n": 124,
+        "wilson_lower_95": 0.500703166454782
+      },
+      "without_personnel_or_history": {
         "accuracy": 0.782258064516129,
         "correct": 97,
         "log_loss": 0.4964313368899586,
         "n": 124,
         "wilson_lower_95": 0.7017324571463031
-      },
-      "situation": {
-        "accuracy": 0.5887096774193549,
-        "correct": 73,
-        "log_loss": 0.5849115273223319,
-        "n": 124,
-        "wilson_lower_95": 0.500703166454782
       }
     },
     "Atlanta first eligible snap": {
       "observed": {
         "accuracy": 0.7777777777777778,
         "correct": 21,
-        "log_loss": 0.5734080909395627,
+        "log_loss": 0.5411183416364997,
         "n": 27,
         "wilson_lower_95": 0.5924270453692919
       },
       "situation": {
         "accuracy": 0.37037037037037035,
         "correct": 10,
-        "log_loss": 0.7079873686115455,
+        "log_loss": 0.7020170225198128,
         "n": 27,
         "wilson_lower_95": 0.21532287067936856
+      },
+      "without_personnel_or_history": {
+        "accuracy": 0.7777777777777778,
+        "correct": 21,
+        "log_loss": 0.5734080909395627,
+        "n": 27,
+        "wilson_lower_95": 0.5924270453692919
+      }
+    },
+    "Both personnel groups known": {
+      "observed": {
+        "accuracy": 0.7152424323600322,
+        "correct": 2670,
+        "log_loss": 0.5581884101217436,
+        "n": 3733,
+        "wilson_lower_95": 0.7005494817414922
+      },
+      "situation": {
+        "accuracy": 0.6174658451647469,
+        "correct": 2305,
+        "log_loss": 0.6055613992792152,
+        "n": 3733,
+        "wilson_lower_95": 0.6017618252454151
+      },
+      "without_personnel_or_history": {
+        "accuracy": 0.7096169300830432,
+        "correct": 2649,
+        "log_loss": 0.5578748132742873,
+        "n": 3733,
+        "wilson_lower_95": 0.6948452052853916
       }
     },
     "Minnesota defense": {
       "observed": {
+        "accuracy": 0.7396449704142012,
+        "correct": 125,
+        "log_loss": 0.5446310154595669,
+        "n": 169,
+        "wilson_lower_95": 0.6686797087245315
+      },
+      "situation": {
+        "accuracy": 0.6272189349112426,
+        "correct": 106,
+        "log_loss": 0.6058145971807539,
+        "n": 169,
+        "wilson_lower_95": 0.5522470115042576
+      },
+      "without_personnel_or_history": {
         "accuracy": 0.727810650887574,
         "correct": 123,
         "log_loss": 0.5427292143533985,
         "n": 169,
         "wilson_lower_95": 0.6561989335235279
-      },
-      "situation": {
-        "accuracy": 0.6272189349112426,
-        "correct": 106,
-        "log_loss": 0.601791038888214,
-        "n": 169,
-        "wilson_lower_95": 0.5522470115042576
       }
     },
     "all": {
       "observed": {
+        "accuracy": 0.7140350877192982,
+        "correct": 4070,
+        "log_loss": 0.5583413972503997,
+        "n": 5700,
+        "wilson_lower_95": 0.7021630043826971
+      },
+      "situation": {
+        "accuracy": 0.6159649122807017,
+        "correct": 3511,
+        "log_loss": 0.6059957653586093,
+        "n": 5700,
+        "wilson_lower_95": 0.6032643459040408
+      },
+      "without_personnel_or_history": {
         "accuracy": 0.7124561403508772,
         "correct": 4061,
         "log_loss": 0.558818134636817,
         "n": 5700,
         "wilson_lower_95": 0.7005658131676583
-      },
-      "situation": {
-        "accuracy": 0.6159649122807017,
-        "correct": 3511,
-        "log_loss": 0.6005319385739427,
-        "n": 5700,
-        "wilson_lower_95": 0.6032643459040408
       }
     }
   },
   "test_at_validated_threshold": {
-    "accuracy": 0.9248826291079812,
-    "correct": 985,
-    "coverage": 0.1868421052631579,
-    "game_bootstrap_lower_95": 0.9091751409306953,
-    "games": 424,
-    "log_loss": 0.25199417405290825,
-    "n": 1065,
-    "threshold": 0.85,
-    "wilson_lower_95": 0.9074798798012645
+    "accuracy": 0.9406952965235174,
+    "correct": 460,
+    "coverage": 0.08578947368421053,
+    "game_bootstrap_lower_95": 0.9190283400809717,
+    "games": 254,
+    "log_loss": 0.20632573472886936,
+    "n": 489,
+    "threshold": 0.9,
+    "wilson_lower_95": 0.9161259868172595
   },
   "test_at_validated_threshold_atlanta": {
-    "accuracy": 0.9615384615384616,
-    "correct": 25,
-    "coverage": 0.20967741935483872,
+    "accuracy": 1.0,
+    "correct": 15,
+    "coverage": 0.12096774193548387,
     "game_bootstrap_lower_95": null,
-    "games": 21,
-    "log_loss": 0.15238586369750734,
-    "n": 26,
-    "threshold": 0.85,
-    "wilson_lower_95": 0.8110682300804161
+    "games": 14,
+    "log_loss": 0.029294846664440984,
+    "n": 15,
+    "threshold": 0.9,
+    "wilson_lower_95": 0.7961107336956521
   },
   "test_confidence_bands": [
     {
-      "accuracy": 0.8125681075190702,
-      "correct": 2237,
-      "coverage": 0.4829824561403509,
-      "game_bootstrap_lower_95": 0.7986685091904198,
-      "games": 447,
-      "log_loss": 0.44517970239009974,
-      "n": 2753,
+      "accuracy": 0.8066825775656324,
+      "correct": 1352,
+      "coverage": 0.29403508771929826,
+      "game_bootstrap_lower_95": 0.787588662681807,
+      "games": 285,
+      "log_loss": 0.4512532380591837,
+      "n": 1676,
       "threshold": 0.7,
-      "wilson_lower_95": 0.7975579783198163
+      "wilson_lower_95": 0.7870835702384329
     },
     {
-      "accuracy": 0.8459692898272553,
-      "correct": 1763,
-      "coverage": 0.3656140350877193,
-      "game_bootstrap_lower_95": 0.8301158301158301,
-      "games": 445,
-      "log_loss": 0.3941139933657705,
-      "n": 2084,
+      "accuracy": 0.8582887700534759,
+      "correct": 963,
+      "coverage": 0.1968421052631579,
+      "game_bootstrap_lower_95": 0.8385054879605207,
+      "games": 282,
+      "log_loss": 0.3733414320591668,
+      "n": 1122,
       "threshold": 0.75,
-      "wilson_lower_95": 0.8298354496296204
+      "wilson_lower_95": 0.8366574433347052
     },
     {
-      "accuracy": 0.9087564385577631,
-      "correct": 1235,
-      "coverage": 0.23842105263157895,
-      "game_bootstrap_lower_95": 0.892882690493659,
-      "games": 437,
-      "log_loss": 0.2895435240179585,
-      "n": 1359,
+      "accuracy": 0.9025316455696203,
+      "correct": 713,
+      "coverage": 0.13859649122807016,
+      "game_bootstrap_lower_95": 0.8831914508167023,
+      "games": 277,
+      "log_loss": 0.29439512160641695,
+      "n": 790,
       "threshold": 0.8,
-      "wilson_lower_95": 0.8922726057727387
+      "wilson_lower_95": 0.8798594269294672
     },
     {
-      "accuracy": 0.9248826291079812,
-      "correct": 985,
-      "coverage": 0.1868421052631579,
-      "game_bootstrap_lower_95": 0.9091751409306953,
-      "games": 424,
-      "log_loss": 0.25199417405290825,
-      "n": 1065,
+      "accuracy": 0.9230769230769231,
+      "correct": 576,
+      "coverage": 0.10947368421052632,
+      "game_bootstrap_lower_95": 0.9027349563463785,
+      "games": 270,
+      "log_loss": 0.24941325577307863,
+      "n": 624,
       "threshold": 0.85,
-      "wilson_lower_95": 0.9074798798012645
+      "wilson_lower_95": 0.8994842216693315
     },
     {
-      "accuracy": 0.9546666666666667,
-      "correct": 716,
-      "coverage": 0.13157894736842105,
-      "game_bootstrap_lower_95": 0.9398886546612546,
-      "games": 397,
-      "log_loss": 0.17947251878161136,
-      "n": 750,
+      "accuracy": 0.9406952965235174,
+      "correct": 460,
+      "coverage": 0.08578947368421053,
+      "game_bootstrap_lower_95": 0.9190283400809717,
+      "games": 254,
+      "log_loss": 0.20632573472886936,
+      "n": 489,
       "threshold": 0.9,
-      "wilson_lower_95": 0.9373191816545491
+      "wilson_lower_95": 0.9161259868172595
     },
     {
-      "accuracy": 0.9674502712477396,
-      "correct": 535,
-      "coverage": 0.09701754385964913,
-      "game_bootstrap_lower_95": 0.9525526629846521,
-      "games": 360,
-      "log_loss": 0.14130362912900887,
-      "n": 553,
+      "accuracy": 0.9686609686609686,
+      "correct": 340,
+      "coverage": 0.06157894736842105,
+      "game_bootstrap_lower_95": 0.95,
+      "games": 222,
+      "log_loss": 0.12941295220506682,
+      "n": 351,
       "threshold": 0.93,
-      "wilson_lower_95": 0.9491373549970303
+      "wilson_lower_95": 0.9447617557377951
     },
     {
-      "accuracy": 0.9766899766899767,
-      "correct": 419,
-      "coverage": 0.07526315789473684,
-      "game_bootstrap_lower_95": 0.96170968630501,
-      "games": 309,
-      "log_loss": 0.11211033090125655,
-      "n": 429,
+      "accuracy": 0.9724137931034482,
+      "correct": 282,
+      "coverage": 0.05087719298245614,
+      "game_bootstrap_lower_95": 0.9515570934256056,
+      "games": 202,
+      "log_loss": 0.11400802927592156,
+      "n": 290,
       "threshold": 0.95,
-      "wilson_lower_95": 0.9576281458804786
+      "wilson_lower_95": 0.9465183002778628
     },
     {
-      "accuracy": 0.9846743295019157,
-      "correct": 257,
-      "coverage": 0.045789473684210526,
-      "game_bootstrap_lower_95": 0.9681243027888446,
-      "games": 219,
-      "log_loss": 0.0837976295026137,
-      "n": 261,
+      "accuracy": 0.9875,
+      "correct": 158,
+      "coverage": 0.028070175438596492,
+      "game_bootstrap_lower_95": 0.9681528662420382,
+      "games": 132,
+      "log_loss": 0.0559282089530984,
+      "n": 160,
       "threshold": 0.97,
-      "wilson_lower_95": 0.9612634673065324
+      "wilson_lower_95": 0.9555737384223193
     }
   ],
   "test_label_counts_by_season": {
     "defense_personnel": {
-      "2025": 3748,
+      "2025": 3733,
       "2026": 0
     },
     "is_motion": {
@@ -268,72 +363,44 @@
     }
   },
   "threshold_validated_for_90_percent": {
-    "accuracy": 0.9239302694136292,
-    "correct": 583,
-    "coverage": 0.17744656917885265,
-    "game_bootstrap_lower_95": 0.9023235316040549,
-    "games": 269,
-    "log_loss": 0.2741014981078018,
-    "n": 631,
-    "threshold": 0.85,
-    "wilson_lower_95": 0.9005831503070708
+    "accuracy": 0.9337899543378996,
+    "correct": 409,
+    "coverage": 0.12317210348706412,
+    "game_bootstrap_lower_95": 0.9088684704410385,
+    "games": 243,
+    "log_loss": 0.2389819879802452,
+    "n": 438,
+    "threshold": 0.9,
+    "wilson_lower_95": 0.9065284759837202
   },
   "validation": {
-    "Alignment and box": {
-      "accuracy": 0.71962879640045,
-      "correct": 2559,
-      "log_loss": 0.5628276860981177,
+    "Alignment and last three calls with personnel": {
+      "accuracy": 0.7173790776152981,
+      "correct": 2551,
+      "log_loss": 0.5685310957149359,
       "n": 3556,
-      "wilson_lower_95": 0.7046341166875222
+      "wilson_lower_95": 0.7023509619968796
     },
-    "Alignment, box and backfield": {
-      "accuracy": 0.7131608548931384,
-      "correct": 2536,
-      "log_loss": 0.5597120055636936,
-      "n": 3556,
-      "wilson_lower_95": 0.6980712698298005
-    },
-    "Alignment, box, backfield and hash": {
-      "accuracy": 0.7131608548931384,
-      "correct": 2536,
-      "log_loss": 0.561576439920606,
-      "n": 3556,
-      "wilson_lower_95": 0.6980712698298005
-    },
-    "Alignment, box, backfield and motion": {
+    "Alignment and previous call with personnel": {
       "accuracy": 0.7156917885264342,
       "correct": 2545,
-      "log_loss": 0.5571996012584943,
+      "log_loss": 0.5690858740820347,
       "n": 3556,
       "wilson_lower_95": 0.7006388945243682
     },
-    "All observable fields": {
-      "accuracy": 0.7061304836895388,
-      "correct": 2511,
-      "log_loss": 0.5669210775798134,
+    "Visible setup and last three calls with personnel": {
+      "accuracy": 0.7125984251968503,
+      "correct": 2534,
+      "log_loss": 0.5694489323728875,
       "n": 3556,
-      "wilson_lower_95": 0.6909419444303352
+      "wilson_lower_95": 0.6975007638289658
     },
-    "Formation and personnel": {
-      "accuracy": 0.7165354330708661,
-      "correct": 2548,
-      "log_loss": 0.568131826783214,
+    "Visible setup and previous call with personnel": {
+      "accuracy": 0.7123172103487064,
+      "correct": 2533,
+      "log_loss": 0.5694858081640879,
       "n": 3556,
-      "wilson_lower_95": 0.7014948963794203
-    },
-    "QB alignment": {
-      "accuracy": 0.7204724409448819,
-      "correct": 2562,
-      "log_loss": 0.5643760673011122,
-      "n": 3556,
-      "wilson_lower_95": 0.7054904175877474
-    },
-    "Situation only": {
-      "accuracy": 0.6183914510686164,
-      "correct": 2199,
-      "log_loss": 0.6114985065866384,
-      "n": 3556,
-      "wilson_lower_95": 0.6023050651722115
+      "wilson_lower_95": 0.6972155213276057
     }
   }
 }
