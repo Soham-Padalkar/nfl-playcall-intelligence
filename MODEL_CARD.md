@@ -1,5 +1,21 @@
 # Opening-drive model card
 
+## Forecast from the visible setup
+
+The optional pre-snap predictor uses down, distance, field position and four observations from FTN Data via nflverse. They are QB alignment, defenders in the box, players in the backfield and motion. The validation also considered field hash, formation and both personnel groups. The selected configuration had the lowest validation log loss. For rare setups, the model pulls its estimate toward broader historical rates. Missing fields allow broader estimates. [FTN charting definitions](https://nflreadr.nflverse.com/articles/dictionary_ftn_charting.html)
+
+The pre-snap experiment fit on 2022–23 and selected the input set, shrinkage and confidence threshold on 2024. It evaluated on games played from September 2025 through November 22, 2026. The held-out test used the archived charted observations for each snap. An operator needs to see those observations to use the same forecast conditions. Coverage can be lower with broadcast footage. The 2026 participation cache lacks the detailed formation and personnel labels.
+
+| Held-out result | Correct calls | Accuracy |
+| --- | ---: | ---: |
+| All eligible calls | 4,061 / 5,700 | 71.25% |
+| All Atlanta calls | 97 / 124 | 78.23% |
+| Atlanta first eligible snaps | 21 / 27 | 77.78% |
+| League high-confidence group | 985 / 1,065 | 92.49% |
+| Atlanta high-confidence group | 25 / 26 | 96.15% |
+
+The high-confidence rule requires all four observations and a model probability of at least 85% for the predicted class. The group covered 18.68% of the league test plays. A bootstrap that resampled entire games gave a 90.92% lower bound for its league accuracy. The Atlanta group had 21 games and offers limited evidence about another matchup. The frozen pregame forecast uses information available before kickoff. [Pre-snap experiment](docs/presnap-results.json)
+
 The production target is the offensive choice between a run and a dropback on an eligible opening-drive scrimmage play. The population includes both offenses in regular-season and playoff games present in the dataset. The model can support scenario exploration by an analyst. It has no validation for prediction of an exact playbook call or personnel substitution.
 
 ## Evaluation

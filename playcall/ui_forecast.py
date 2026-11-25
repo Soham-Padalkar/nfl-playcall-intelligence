@@ -124,10 +124,12 @@ def predictor():
     from playcall.simulation import freeze_forecast, opening_tree
 
     st.caption("Change the pre-snap state to see updated opening-drive probabilities.")
+    state, depth = _state_inputs()
+    with st.expander("Update from the visible setup"):
+        _observed_prediction(state)
     model = ui.require_model()
     if model is None:
         return
-    state, depth = _state_inputs()
     tree = opening_tree(model, state, depth=depth)
     st.subheader("Next eligible play")
     ui.show_prediction(tree["root"]["prediction"])
@@ -150,6 +152,91 @@ def predictor():
             st.success(
                 f"Saved pregame forecast {snapshot['id']}. Open Live Prediction & Evaluation to review it."
             )
+
+
+def _observed_prediction(state):
+    from playcall.presnap import OBSERVABLES, features
+
+    st.caption("Enter only the setup you can see for this play. Leave uncertain fields blank.")
+    report_path = ui.ROOT / "docs" / "presnap-results.json"
+    if not report_path.is_file():
+        st.info("The pre-snap evaluation report is missing.")
+        return
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    fields = tuple(report["fields"])
+    with st.form("observed_setup"):
+        columns = st.columns(3)
+        inputs = {}
+        options = {
+            "qb_location": {"U": "Under center", "S": "Shotgun", "P": "Pistol"},
+            "starting_hash": {"L": "Left", "M": "Middle", "R": "Right"},
+            "is_motion": {"True": "Observed", "False": "No motion observed before the snap"},
+        }
+        for index, field in enumerate(fields):
+            column = columns[index % len(columns)]
+            if field in options:
+                labels = options[field]
+                inputs[field] = column.selectbox(
+                    OBSERVABLES[field],
+                    [None, *labels],
+                    format_func=lambda value, names=labels: names.get(value, "Unknown"),
+                )
+            elif field in ("n_defense_box", "n_offense_backfield"):
+                inputs[field] = column.number_input(OBSERVABLES[field], 0, 11, value=None)
+            else:
+                inputs[field] = column.text_input(OBSERVABLES[field])
+        ready = st.form_submit_button("Update run/pass probabilities")
+    if not ready:
+        return
+    if not any(value not in (None, "") for value in inputs.values()):
+        st.info("Enter at least one observation.")
+        return
+    model = _load_observed_model(ui.get_manifest()["dataset_version"], fields, report["strength"])
+    if model is None:
+        st.info("Load the 2022 and 2023 play-by-play and charting data first.")
+        return
+    row = features(
+        pd.DataFrame(
+            [
+                {
+                    **inputs,
+                    "down": state.down,
+                    "ydstogo": state.distance,
+                    "yardline_100": state.yardline_100,
+                }
+            ]
+        )
+    )
+    p_pass = float(model.predict(row)[0])
+    ui.show_prediction({"p_pass": p_pass, "p_run": 1 - p_pass})
+    band = report["test_at_validated_threshold"]
+    if (
+        band
+        and (band["game_bootstrap_lower_95"] or 0) >= 0.90
+        and row[list(fields)].notna().all(axis=None)
+    ):
+        if max(p_pass, 1 - p_pass) >= band["threshold"]:
+            st.caption(
+                f"This estimate is in the high-confidence group. On held-out league games, "
+                f"{band['accuracy']:.1%} of estimates in that group were correct across "
+                f"{band['coverage']:.1%} of all eligible plays."
+            )
+
+
+@st.cache_resource(show_spinner="Fitting the pre-snap model…", max_entries=2)
+def _load_observed_model(dataset_version, fields, strength):
+    from playcall.data import DataStore
+    from playcall.presnap import ObservedModel, features
+
+    data = DataStore(ui.DATA).plays([2022, 2023])
+    if data.empty:
+        return None
+    opening = data.loc[data["opening_drive"]]
+    if opening.empty or set(opening["season"]) != {2022, 2023}:
+        return None
+    return ObservedModel(
+        features(opening.assign(target=opening["call"].eq("pass"))), fields, strength
+    )
 
 
 def _state_line(state):
