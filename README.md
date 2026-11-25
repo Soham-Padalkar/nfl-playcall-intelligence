@@ -74,4 +74,10 @@ The local task runs at 6 a.m. through December 1, 2026. It requires this checkou
 
 ## Frozen-drive test and release artifacts
 
+### Update a prediction from the visible setup
+
+In **Opening-Drive Predictor**, expand **Update from the visible setup**. Enter the quarterback alignment, defenders in the box, players in the backfield and any motion you observed. The panel predicts the current snap. It uses the setup at or just before the snap. Its accuracy depends on seeing and recording those cues correctly.
+
+The pre-snap backtest got 71.25% of all eligible calls right. Its high-confidence group reached 92.49% accuracy on 18.68% of plays. The threshold was set on 2024 games before evaluating later games. Reproduce the comparison with `python -m playcall.presnap`. [Pre-snap results](docs/presnap-results.json)
+
 Across 27 held-out Atlanta opening drives, a separate frozen replay predicted the first call correctly 15 times. A league first-call baseline was correct 18 times. Run `python -m playcall.replay --as-of 2026-11-23 --output models/replay-results.json` to reproduce this comparison. The release includes the [tabular evaluation](docs/backtest.json), [frozen-drive evaluation](docs/replay-results.json), [GPU experiment](docs/neural-results.json), [cloud training notebook](notebooks/neural-opening-drive.ipynb) and [predictor screenshot](docs/opening-drive-predictor.png).

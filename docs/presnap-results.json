@@ -1,0 +1,339 @@
+{
+  "cutoff": "2026-11-22",
+  "dataset_version": "d0f82edfbbb4cf91",
+  "fields": [
+    "qb_location",
+    "n_defense_box",
+    "n_offense_backfield",
+    "is_motion"
+  ],
+  "selected": "Alignment, box, backfield and motion",
+  "split": {
+    "test": {
+      "games": 447,
+      "plays": 5700
+    },
+    "train": {
+      "games": 569,
+      "plays": 7256
+    },
+    "validation": {
+      "games": 285,
+      "plays": 3556
+    }
+  },
+  "strength": 32,
+  "test": {
+    "2025": {
+      "observed": {
+        "accuracy": 0.7097118463180363,
+        "correct": 2660,
+        "log_loss": 0.5585647085040478,
+        "n": 3748,
+        "wilson_lower_95": 0.694971420859666
+      },
+      "situation": {
+        "accuracy": 0.6173959445037354,
+        "correct": 2314,
+        "log_loss": 0.6009244082470266,
+        "n": 3748,
+        "wilson_lower_95": 0.6017231233733707
+      }
+    },
+    "2026": {
+      "observed": {
+        "accuracy": 0.7177254098360656,
+        "correct": 1401,
+        "log_loss": 0.5593047335843676,
+        "n": 1952,
+        "wilson_lower_95": 0.6973449510238576
+      },
+      "situation": {
+        "accuracy": 0.6132172131147541,
+        "correct": 1197,
+        "log_loss": 0.5997783646319764,
+        "n": 1952,
+        "wilson_lower_95": 0.5914097875856843
+      }
+    },
+    "Atlanta": {
+      "observed": {
+        "accuracy": 0.782258064516129,
+        "correct": 97,
+        "log_loss": 0.4964313368899586,
+        "n": 124,
+        "wilson_lower_95": 0.7017324571463031
+      },
+      "situation": {
+        "accuracy": 0.5887096774193549,
+        "correct": 73,
+        "log_loss": 0.5849115273223319,
+        "n": 124,
+        "wilson_lower_95": 0.500703166454782
+      }
+    },
+    "Atlanta first eligible snap": {
+      "observed": {
+        "accuracy": 0.7777777777777778,
+        "correct": 21,
+        "log_loss": 0.5734080909395627,
+        "n": 27,
+        "wilson_lower_95": 0.5924270453692919
+      },
+      "situation": {
+        "accuracy": 0.37037037037037035,
+        "correct": 10,
+        "log_loss": 0.7079873686115455,
+        "n": 27,
+        "wilson_lower_95": 0.21532287067936856
+      }
+    },
+    "Minnesota defense": {
+      "observed": {
+        "accuracy": 0.727810650887574,
+        "correct": 123,
+        "log_loss": 0.5427292143533985,
+        "n": 169,
+        "wilson_lower_95": 0.6561989335235279
+      },
+      "situation": {
+        "accuracy": 0.6272189349112426,
+        "correct": 106,
+        "log_loss": 0.601791038888214,
+        "n": 169,
+        "wilson_lower_95": 0.5522470115042576
+      }
+    },
+    "all": {
+      "observed": {
+        "accuracy": 0.7124561403508772,
+        "correct": 4061,
+        "log_loss": 0.558818134636817,
+        "n": 5700,
+        "wilson_lower_95": 0.7005658131676583
+      },
+      "situation": {
+        "accuracy": 0.6159649122807017,
+        "correct": 3511,
+        "log_loss": 0.6005319385739427,
+        "n": 5700,
+        "wilson_lower_95": 0.6032643459040408
+      }
+    }
+  },
+  "test_at_validated_threshold": {
+    "accuracy": 0.9248826291079812,
+    "correct": 985,
+    "coverage": 0.1868421052631579,
+    "game_bootstrap_lower_95": 0.9091751409306953,
+    "games": 424,
+    "log_loss": 0.25199417405290825,
+    "n": 1065,
+    "threshold": 0.85,
+    "wilson_lower_95": 0.9074798798012645
+  },
+  "test_at_validated_threshold_atlanta": {
+    "accuracy": 0.9615384615384616,
+    "correct": 25,
+    "coverage": 0.20967741935483872,
+    "game_bootstrap_lower_95": null,
+    "games": 21,
+    "log_loss": 0.15238586369750734,
+    "n": 26,
+    "threshold": 0.85,
+    "wilson_lower_95": 0.8110682300804161
+  },
+  "test_confidence_bands": [
+    {
+      "accuracy": 0.8125681075190702,
+      "correct": 2237,
+      "coverage": 0.4829824561403509,
+      "game_bootstrap_lower_95": 0.7986685091904198,
+      "games": 447,
+      "log_loss": 0.44517970239009974,
+      "n": 2753,
+      "threshold": 0.7,
+      "wilson_lower_95": 0.7975579783198163
+    },
+    {
+      "accuracy": 0.8459692898272553,
+      "correct": 1763,
+      "coverage": 0.3656140350877193,
+      "game_bootstrap_lower_95": 0.8301158301158301,
+      "games": 445,
+      "log_loss": 0.3941139933657705,
+      "n": 2084,
+      "threshold": 0.75,
+      "wilson_lower_95": 0.8298354496296204
+    },
+    {
+      "accuracy": 0.9087564385577631,
+      "correct": 1235,
+      "coverage": 0.23842105263157895,
+      "game_bootstrap_lower_95": 0.892882690493659,
+      "games": 437,
+      "log_loss": 0.2895435240179585,
+      "n": 1359,
+      "threshold": 0.8,
+      "wilson_lower_95": 0.8922726057727387
+    },
+    {
+      "accuracy": 0.9248826291079812,
+      "correct": 985,
+      "coverage": 0.1868421052631579,
+      "game_bootstrap_lower_95": 0.9091751409306953,
+      "games": 424,
+      "log_loss": 0.25199417405290825,
+      "n": 1065,
+      "threshold": 0.85,
+      "wilson_lower_95": 0.9074798798012645
+    },
+    {
+      "accuracy": 0.9546666666666667,
+      "correct": 716,
+      "coverage": 0.13157894736842105,
+      "game_bootstrap_lower_95": 0.9398886546612546,
+      "games": 397,
+      "log_loss": 0.17947251878161136,
+      "n": 750,
+      "threshold": 0.9,
+      "wilson_lower_95": 0.9373191816545491
+    },
+    {
+      "accuracy": 0.9674502712477396,
+      "correct": 535,
+      "coverage": 0.09701754385964913,
+      "game_bootstrap_lower_95": 0.9525526629846521,
+      "games": 360,
+      "log_loss": 0.14130362912900887,
+      "n": 553,
+      "threshold": 0.93,
+      "wilson_lower_95": 0.9491373549970303
+    },
+    {
+      "accuracy": 0.9766899766899767,
+      "correct": 419,
+      "coverage": 0.07526315789473684,
+      "game_bootstrap_lower_95": 0.96170968630501,
+      "games": 309,
+      "log_loss": 0.11211033090125655,
+      "n": 429,
+      "threshold": 0.95,
+      "wilson_lower_95": 0.9576281458804786
+    },
+    {
+      "accuracy": 0.9846743295019157,
+      "correct": 257,
+      "coverage": 0.045789473684210526,
+      "game_bootstrap_lower_95": 0.9681243027888446,
+      "games": 219,
+      "log_loss": 0.0837976295026137,
+      "n": 261,
+      "threshold": 0.97,
+      "wilson_lower_95": 0.9612634673065324
+    }
+  ],
+  "test_label_counts_by_season": {
+    "defense_personnel": {
+      "2025": 3748,
+      "2026": 0
+    },
+    "is_motion": {
+      "2025": 3748,
+      "2026": 1952
+    },
+    "n_defense_box": {
+      "2025": 3748,
+      "2026": 1952
+    },
+    "n_offense_backfield": {
+      "2025": 3742,
+      "2026": 1952
+    },
+    "offense_formation": {
+      "2025": 3744,
+      "2026": 0
+    },
+    "offense_personnel": {
+      "2025": 3748,
+      "2026": 0
+    },
+    "qb_location": {
+      "2025": 3748,
+      "2026": 1952
+    },
+    "starting_hash": {
+      "2025": 3748,
+      "2026": 1952
+    }
+  },
+  "threshold_validated_for_90_percent": {
+    "accuracy": 0.9239302694136292,
+    "correct": 583,
+    "coverage": 0.17744656917885265,
+    "game_bootstrap_lower_95": 0.9023235316040549,
+    "games": 269,
+    "log_loss": 0.2741014981078018,
+    "n": 631,
+    "threshold": 0.85,
+    "wilson_lower_95": 0.9005831503070708
+  },
+  "validation": {
+    "Alignment and box": {
+      "accuracy": 0.71962879640045,
+      "correct": 2559,
+      "log_loss": 0.5628276860981177,
+      "n": 3556,
+      "wilson_lower_95": 0.7046341166875222
+    },
+    "Alignment, box and backfield": {
+      "accuracy": 0.7131608548931384,
+      "correct": 2536,
+      "log_loss": 0.5597120055636936,
+      "n": 3556,
+      "wilson_lower_95": 0.6980712698298005
+    },
+    "Alignment, box, backfield and hash": {
+      "accuracy": 0.7131608548931384,
+      "correct": 2536,
+      "log_loss": 0.561576439920606,
+      "n": 3556,
+      "wilson_lower_95": 0.6980712698298005
+    },
+    "Alignment, box, backfield and motion": {
+      "accuracy": 0.7156917885264342,
+      "correct": 2545,
+      "log_loss": 0.5571996012584943,
+      "n": 3556,
+      "wilson_lower_95": 0.7006388945243682
+    },
+    "All observable fields": {
+      "accuracy": 0.7061304836895388,
+      "correct": 2511,
+      "log_loss": 0.5669210775798134,
+      "n": 3556,
+      "wilson_lower_95": 0.6909419444303352
+    },
+    "Formation and personnel": {
+      "accuracy": 0.7165354330708661,
+      "correct": 2548,
+      "log_loss": 0.568131826783214,
+      "n": 3556,
+      "wilson_lower_95": 0.7014948963794203
+    },
+    "QB alignment": {
+      "accuracy": 0.7204724409448819,
+      "correct": 2562,
+      "log_loss": 0.5643760673011122,
+      "n": 3556,
+      "wilson_lower_95": 0.7054904175877474
+    },
+    "Situation only": {
+      "accuracy": 0.6183914510686164,
+      "correct": 2199,
+      "log_loss": 0.6114985065866384,
+      "n": 3556,
+      "wilson_lower_95": 0.6023050651722115
+    }
+  }
+}
