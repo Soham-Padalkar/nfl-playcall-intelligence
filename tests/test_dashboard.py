@@ -18,9 +18,26 @@ class TestForecastModel:
 
     def predict(self, state):
         pass_share = 0.6 if state.down == 1 else 0.75
-        return {"p_pass": pass_share, "p_run": 1 - pass_share, "selected_model": "test"}
+        prediction = {"p_pass": pass_share, "p_run": 1 - pass_share, "selected_model": "test"}
+        return {**prediction, "setups": self.predict_setups(state, prediction)}
 
     call_probabilities = predict
+
+    def predict_setups(self, state, prediction):
+        return {
+            "pass": {
+                "options": [
+                    {
+                        "personnel": "12" if state.down == 1 else "11",
+                        "formation": "Shotgun",
+                        "concept": "Play-action pass" if state.down == 1 else "Short pass left",
+                        "weighted_share": prediction["p_pass"],
+                        "conditional_share": 1.0,
+                        "samples": 1,
+                    }
+                ]
+            }
+        }
 
     def outcome_distribution(self, state, call):
         return [
@@ -80,7 +97,7 @@ def test_freeze_and_adaptive_entry(monkeypatch, tmp_path):
 
     # Exercise the post-kickoff UI while preserving the frozen record.
     game["kickoff_utc"] = (datetime.now(UTC) - timedelta(minutes=1)).isoformat()
-    app.sidebar.radio[0].set_value("Live Prediction & Evaluation").run()
+    next(button for button in app.button if button.label == "Open live play log").click().run()
     assert not app.exception
     next(field for field in app.number_input if field.label == "Yards gained").set_value(3)
     next(button for button in app.button if button.label == "Record play and update").click().run()
@@ -90,14 +107,25 @@ def test_freeze_and_adaptive_entry(monkeypatch, tmp_path):
     assert records[0]["parent_id"] == forecasts[0]["id"]
     assert records[0]["actual"]["yards"] == 3
     assert records[0]["state"]["down"] == 2
+    assert records[0]["state"]["distance"] == 7
     assert records[0]["forecast"]["root"]["prediction"]["p_pass"] == 0.75
+    assert any("Short pass left" in entry.value for entry in app.markdown)
 
     next(field for field in app.number_input if field.label == "Yards gained").set_value(2)
+    for label, value in (
+        ("Official next down", 1),
+        ("Official yards to gain", 10),
+        ("Official yards to goal", 65),
+    ):
+        next(field for field in app.number_input if field.label == label).set_value(value)
     next(button for button in app.button if button.label == "Record play and update").click().run()
     assert not app.exception
     records = list_forecasts(ui_forecast.PREDICTIONS, game_id="test-game", kind="adaptive")
     assert len(records) == 2
     assert records[1]["parent_id"] == records[0]["id"]
+    assert records[1]["state"]["down"] == 1
+    assert records[1]["state"]["distance"] == 10
+    assert records[1]["state"]["yardline_100"] == 65
     evaluation = ui_forecast._series(records, forecasts[0])
     assert evaluation.loc[0, "Frozen"] == 0.6
     assert evaluation.loc[1, "Adaptive"] == 0.75
@@ -110,3 +138,15 @@ def test_alignment_respects_manual_evidence():
     assert "Shotgun-like" in _snap_alignment(5.5, 0.5, "Offset")
     assert "Ambiguous" in _snap_alignment(4.5, 1.0, "Directly behind")
     assert "Unknown" in _snap_alignment(5.5, None, "Offset")
+
+
+def test_projected_drive_ignores_a_high_mass_path_pruned_before_the_horizon():
+    def node(mass, children=(), ended=False):
+        return {"mass": mass, "children": list(children), "state": {"drive_ended": ended}}
+
+    pruned = {"call": "run", "node": node(0.5)}
+    continuation = {"call": "pass", "node": node(0.2)}
+    completed = {"call": "run", "node": node(0.3, [continuation])}
+    mass, path = ui_forecast._likely_path(node(1, [pruned, completed]), 2)
+    assert mass == 0.2
+    assert [edge["call"] for _, edge in path] == ["run", "pass"]

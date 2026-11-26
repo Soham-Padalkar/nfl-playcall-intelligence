@@ -74,6 +74,14 @@ The local task runs at 6 a.m. through December 1, 2026. It requires this checkou
 
 ## Frozen-drive test and release artifacts
 
+### Explore Atlanta’s first drive
+
+Open **Opening-Drive Predictor** to see a projected sequence of up to six eligible snaps. Each row shows down, distance, run or pass, offensive personnel, formation, broad concept family and a simulated gain. Use **Explore conditional branches** to check how a different result changes the next call. Select **Freeze pregame forecast** to save the current tree with its assumptions.
+
+Select **Open live play log**. Record the actual call, yards, seconds used and result after each Atlanta snap. The dashboard computes the new down and distance and refreshes the next play and remaining drive scenario. When a penalty or ruling changes the spot, enter all three official next-state fields. Before kickoff, entries go to the rehearsal log.
+
+Personnel, formation and concept are ranked as combinations drawn from the same charted snap. Concept families include screens, play action, RPOs, charted target routes and broad run locations. The labels do not resolve the full playbook call. [FTN charting](https://nflreadr.nflverse.com/articles/dictionary_ftn_charting.html) · [Participation fields](https://nflreadr.nflverse.com/articles/dictionary_participation.html)
+
 ### Update a prediction from the visible setup
 
 Train the four neural candidates after downloading the data. This requires PyTorch.

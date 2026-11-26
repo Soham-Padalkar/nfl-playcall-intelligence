@@ -21,7 +21,9 @@ ui.style()
 with st.sidebar:
     st.markdown("**NFL PLAYCALL INTELLIGENCE**")
     st.caption("ATL  /  MIN")
-    page = st.radio("Dashboard pages", list(PAGES), label_visibility="collapsed")
+    page = st.radio(
+        "Dashboard pages", list(PAGES), key="dashboard_page", label_visibility="collapsed"
+    )
     st.divider()
     st.caption("Research workspace · Local data and forecasts")
 

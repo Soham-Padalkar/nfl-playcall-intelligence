@@ -97,6 +97,8 @@ def _node(model, state, mass, detailed=False):
     prediction = None
     if not state.drive_ended and state.game_seconds_remaining:
         prediction = model.predict(state) if detailed else model.call_probabilities(state)
+        if not detailed and hasattr(model, "predict_setups"):
+            prediction["setups"] = model.predict_setups(state, prediction)
     return {"state": asdict(state), "prediction": prediction, "mass": mass, "children": []}
 
 
@@ -232,6 +234,7 @@ def record_adaptive(
     elapsed_seconds=30,
     parent_id=None,
     depth=3,
+    official_next=None,
 ):
     state_before = asdict(state)
     prediction_before = model.predict(state)
@@ -251,6 +254,22 @@ def record_adaptive(
         touchdown=touchdown,
         elapsed_seconds=elapsed_seconds,
     )
+    if official_next is not None:
+        if following.end_reason not in (None, "turnover on downs"):
+            raise ValueError("A play that ended the drive has no next down.")
+        down, distance, position = official_next
+        if None in official_next or distance > position:
+            raise ValueError(
+                "Enter all three official fields, with distance no greater than yards to goal."
+            )
+        following = replace(
+            following,
+            down=down,
+            distance=distance,
+            yardline_100=position,
+            drive_ended=False,
+            end_reason=None,
+        )
     forecast = opening_tree(model, following, depth=depth)
     payload = _record(model, game_id, "adaptive", datetime.now(UTC))
     payload.update(
@@ -265,6 +284,7 @@ def record_adaptive(
             "turnover": turnover,
             "touchdown": touchdown,
             "elapsed_seconds": elapsed_seconds,
+            "official_next": official_next,
         },
     )
     return _save_record(payload, root)
