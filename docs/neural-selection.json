@@ -1,0 +1,177 @@
+{
+  "candidates": {
+    "GRU": {
+      "epoch": 22,
+      "test": {
+        "accuracy": 0.7210526315789474,
+        "correct": 4110,
+        "log_loss": 0.5513906052562991,
+        "n": 5700,
+        "wilson_lower_95": 0.7092637633920129
+      },
+      "test_atlanta": {
+        "accuracy": 0.7741935483870968,
+        "correct": 96,
+        "log_loss": 0.49249746178494425,
+        "n": 124,
+        "wilson_lower_95": 0.6930081708536336
+      },
+      "test_atlanta_first_observed": {
+        "accuracy": 0.7407407407407407,
+        "correct": 20,
+        "log_loss": 0.5512364236102354,
+        "n": 27,
+        "wilson_lower_95": 0.5532106959738432
+      },
+      "test_first_snap_without_visible_setup": {
+        "accuracy": 0.5134228187919463,
+        "correct": 459,
+        "log_loss": 0.6946894209444702,
+        "n": 894,
+        "wilson_lower_95": 0.48067121533584917
+      },
+      "validation": {
+        "accuracy": 0.7336895388076491,
+        "correct": 2609,
+        "log_loss": 0.5423427651385662,
+        "n": 3556,
+        "wilson_lower_95": 0.7189143475996613
+      }
+    },
+    "Gated MLP": {
+      "epoch": 28,
+      "test": {
+        "accuracy": 0.72,
+        "correct": 4104,
+        "log_loss": 0.5563927918094104,
+        "n": 5700,
+        "wilson_lower_95": 0.7081984259094185
+      },
+      "test_atlanta": {
+        "accuracy": 0.7661290322580645,
+        "correct": 95,
+        "log_loss": 0.4923498094199043,
+        "n": 124,
+        "wilson_lower_95": 0.6843205824332393
+      },
+      "test_atlanta_first_observed": {
+        "accuracy": 0.7407407407407407,
+        "correct": 20,
+        "log_loss": 0.5437216394333266,
+        "n": 27,
+        "wilson_lower_95": 0.5532106959738432
+      },
+      "test_first_snap_without_visible_setup": {
+        "accuracy": 0.5100671140939598,
+        "correct": 456,
+        "log_loss": 0.6944197022385146,
+        "n": 894,
+        "wilson_lower_95": 0.47732473322784935
+      },
+      "validation": {
+        "accuracy": 0.7384701912260967,
+        "correct": 2626,
+        "log_loss": 0.5415215728644062,
+        "n": 3556,
+        "wilson_lower_95": 0.723773856629938
+      }
+    },
+    "MLP": {
+      "epoch": 21,
+      "test": {
+        "accuracy": 0.7189473684210527,
+        "correct": 4098,
+        "log_loss": 0.5545283521668838,
+        "n": 5700,
+        "wilson_lower_95": 0.7071331677742301
+      },
+      "test_atlanta": {
+        "accuracy": 0.7580645161290323,
+        "correct": 94,
+        "log_loss": 0.4905298234922743,
+        "n": 124,
+        "wilson_lower_95": 0.6756684154241164
+      },
+      "test_atlanta_first_observed": {
+        "accuracy": 0.7407407407407407,
+        "correct": 20,
+        "log_loss": 0.5817185092809244,
+        "n": 27,
+        "wilson_lower_95": 0.5532106959738432
+      },
+      "test_first_snap_without_visible_setup": {
+        "accuracy": 0.4809843400447427,
+        "correct": 430,
+        "log_loss": 0.7016907529730954,
+        "n": 894,
+        "wilson_lower_95": 0.44838335412188574
+      },
+      "validation": {
+        "accuracy": 0.7381889763779528,
+        "correct": 2625,
+        "log_loss": 0.5402449542494605,
+        "n": 3556,
+        "wilson_lower_95": 0.72348794241342
+      }
+    },
+    "Residual MLP": {
+      "epoch": 10,
+      "test": {
+        "accuracy": 0.7252631578947368,
+        "correct": 4134,
+        "log_loss": 0.5541489386484996,
+        "n": 5700,
+        "wilson_lower_95": 0.713525912333477
+      },
+      "test_atlanta": {
+        "accuracy": 0.782258064516129,
+        "correct": 97,
+        "log_loss": 0.47086796977208134,
+        "n": 124,
+        "wilson_lower_95": 0.7017324571463031
+      },
+      "test_atlanta_first_observed": {
+        "accuracy": 0.7407407407407407,
+        "correct": 20,
+        "log_loss": 0.5396729506430532,
+        "n": 27,
+        "wilson_lower_95": 0.5532106959738432
+      },
+      "test_first_snap_without_visible_setup": {
+        "accuracy": 0.4574944071588367,
+        "correct": 409,
+        "log_loss": 0.7020181957311005,
+        "n": 894,
+        "wilson_lower_95": 0.42508825584832144
+      },
+      "validation": {
+        "accuracy": 0.735658042744657,
+        "correct": 2616,
+        "log_loss": 0.5369542751329726,
+        "n": 3556,
+        "wilson_lower_95": 0.7209150569683197
+      }
+    }
+  },
+  "cutoff": "2026-11-22",
+  "dataset_version": "b43e95308eddbe08",
+  "device": "cuda",
+  "seed": 85029,
+  "selected": "Gated MLP",
+  "selection": "Highest 2024 accuracy; lowest validation log loss breaks ties.",
+  "split": {
+    "test": {
+      "games": 447,
+      "plays": 5700
+    },
+    "train": {
+      "games": 569,
+      "plays": 7256
+    },
+    "validation": {
+      "games": 285,
+      "plays": 3556
+    }
+  },
+  "version": "ea13282bd20fae7e"
+}

@@ -6,6 +6,7 @@ import pytest
 from streamlit.testing.v1 import AppTest
 
 from playcall import ui, ui_forecast
+from playcall.neural_selection import FIELDS, Winner
 from playcall.presnap import PERSONNEL_WEIGHT, ObservedModel, covered, features, with_game_history
 
 
@@ -74,7 +75,7 @@ def test_personnel_gets_more_weight_and_accepts_charted_position_counts():
     )
 
 
-def test_dashboard_uses_observed_alignment(monkeypatch):
+def test_dashboard_uses_observed_alignment(monkeypatch, tmp_path):
     def predict(model_input):
         row = model_input.iloc[0]
         assert row["qb_location"] == "S"
@@ -82,16 +83,18 @@ def test_dashboard_uses_observed_alignment(monkeypatch):
         assert row["recent_same_game"] == "RPP"
         return np.array([0.88])
 
-    monkeypatch.setattr(ui, "get_manifest", lambda: {"dataset_version": "test"})
+    monkeypatch.setattr(ui, "MODEL", tmp_path / "playcall.joblib")
+    (tmp_path / "neural-winner.json").touch()
     monkeypatch.setattr(
-        ui_forecast, "_load_observed_model", lambda *_: SimpleNamespace(predict=predict)
+        ui_forecast, "_load_observed_model", lambda *_: SimpleNamespace(predict=predict, name="MLP")
     )
     app = AppTest.from_string(
         """
 from types import SimpleNamespace
 from playcall.ui_forecast import _observed_prediction
 _observed_prediction(
-    SimpleNamespace(down=1, distance=10, yardline_100=75), ["run", "pass", "pass"]
+    SimpleNamespace(down=1, distance=10, yardline_100=75,
+                    game_seconds_remaining=3550, score_differential=0), ["run", "pass", "pass"]
 )
 """
     ).run()
@@ -105,3 +108,25 @@ _observed_prediction(
     app.button[0].click().run()
     assert not app.exception
     assert {metric.label: metric.value for metric in app.metric}["Pass probability"] == "88.0%"
+
+
+def test_exported_classifier_handles_a_first_snap_without_setup():
+    weights = {
+        "first.weight": [[0.0] * 11],
+        "first.bias": [1.0],
+        "second.weight": [[2.0]],
+        "second.bias": [0.0],
+        "out.weight": [[1.0]],
+        "out.bias": [0.0],
+        "gate.weight": [[0.0]],
+        "gate.bias": [0.0],
+    }
+    winner = Winner(
+        {
+            "selected": "Gated MLP",
+            "version": "fixture",
+            "weights": weights,
+            "vocab": {key: [] for key in FIELDS},
+        }
+    )
+    assert winner.predict_state({}) == pytest.approx(0.73105858)

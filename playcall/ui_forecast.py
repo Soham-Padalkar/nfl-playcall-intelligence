@@ -155,15 +155,14 @@ def predictor():
 
 
 def _observed_prediction(state, recorded_calls=None):
+    from playcall.neural_selection import FIELDS, MODEL
     from playcall.presnap import HISTORY, OBSERVABLES, features, play_history
 
     st.caption("Enter only the setup you can see for this play. Leave uncertain fields blank.")
-    report_path = ui.ROOT / "docs" / "presnap-results.json"
-    if not report_path.is_file():
-        st.info("The pre-snap evaluation report is missing.")
+    checkpoint = ui.MODEL.with_name(MODEL.name)
+    if not checkpoint.is_file():
+        st.info("Train the neural predictor with python -m playcall.neural_selection.")
         return
-    report = json.loads(report_path.read_text(encoding="utf-8"))
-    fields = tuple(report["fields"])
     with st.form("observed_setup"):
         columns = st.columns(3)
         inputs = {}
@@ -172,7 +171,7 @@ def _observed_prediction(state, recorded_calls=None):
             "starting_hash": {"L": "Left", "M": "Middle", "R": "Right"},
             "is_motion": {"True": "Observed", "False": "No motion observed before the snap"},
         }
-        visible = [field for field in fields if field not in HISTORY]
+        visible = [field for field in FIELDS if field not in HISTORY]
         for index, field in enumerate(visible):
             column = columns[index % len(columns)]
             if field in options:
@@ -206,15 +205,10 @@ def _observed_prediction(state, recorded_calls=None):
         ready = st.form_submit_button("Update run/pass probabilities")
     if not ready:
         return
-    model = _load_observed_model(
-        str(ui.DATA.resolve()),
-        ui.get_manifest()["dataset_version"],
-        fields,
-        report["strength"],
-        report["personnel_weight"],
-    )
-    if model is None:
-        st.info("Load the 2022 and 2023 play-by-play and charting data first.")
+    try:
+        model = _load_observed_model(checkpoint, checkpoint.stat().st_mtime_ns)
+    except (OSError, ValueError, KeyError) as error:
+        st.error(f"Could not load the neural predictor. {error}")
         return
     row = features(
         pd.DataFrame(
@@ -224,12 +218,14 @@ def _observed_prediction(state, recorded_calls=None):
                     "down": state.down,
                     "ydstogo": state.distance,
                     "yardline_100": state.yardline_100,
+                    "game_seconds_remaining": state.game_seconds_remaining,
+                    "score_differential": state.score_differential,
                 }
             ]
         )
     )
     p_pass = float(model.predict(row)[0])
-    ui.show_prediction({"p_pass": p_pass, "p_run": 1 - p_pass})
+    ui.show_prediction({"p_pass": p_pass, "p_run": 1 - p_pass, "selected_model": model.name})
     context = [
         f"{OBSERVABLES[field]}: {row.iloc[0][field]}"
         for field in ("offense_personnel", "defense_personnel")
@@ -240,32 +236,13 @@ def _observed_prediction(state, recorded_calls=None):
     for field in ("offense_personnel", "defense_personnel"):
         if inputs.get(field, "").strip() and pd.isna(row.iloc[0][field]):
             st.warning(f"Check the format for {OBSERVABLES[field].lower()}.")
-    band = report["test_at_validated_threshold"]
-    if (
-        band
-        and (band["game_bootstrap_lower_95"] or 0) >= 0.90
-        and row[report["confidence_fields"]].notna().all(axis=None)
-    ):
-        if max(p_pass, 1 - p_pass) >= band["threshold"]:
-            st.caption(
-                f"This estimate is in the high-confidence group. On held-out league games, "
-                f"{band['accuracy']:.1%} of estimates in that group were correct across "
-                f"{band['coverage']:.1%} of all eligible plays."
-            )
 
 
-@st.cache_resource(show_spinner="Fitting the pre-snap model…", max_entries=2)
-def _load_observed_model(data_root, dataset_version, fields, strength, personnel_weight):
-    from playcall.data import DataStore
-    from playcall.presnap import ObservedModel, training_examples
+@st.cache_resource(show_spinner="Loading the neural predictor…", max_entries=2)
+def _load_observed_model(path, signature):
+    from playcall.neural_selection import load_winner
 
-    data = DataStore(data_root).plays([2022, 2023])
-    if data.empty:
-        return None
-    opening = training_examples(data)
-    if opening.empty or set(opening["season"]) != {2022, 2023}:
-        return None
-    return ObservedModel(opening, fields, strength, personnel_weight)
+    return load_winner(path)
 
 
 def _state_line(state):
