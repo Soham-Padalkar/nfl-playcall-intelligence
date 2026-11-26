@@ -586,6 +586,7 @@ class PlaycallModels:
             )
             interval = [float(midpoint - radius), float(midpoint + radius)]
         probability.update(
+            setups=self.predict_setups(state, probability),
             tactical=_tactical_distributions(sample)
             | _usage_distributions(self.opening, frame.iloc[0]["posteam"]),
             uncertainty={
@@ -596,6 +597,16 @@ class PlaycallModels:
             },
         )
         return probability
+
+    def predict_setups(self, state, prediction):
+        from playcall.tactics import charted_setups, setup_forecast
+
+        if not hasattr(self, "_setup_reference"):
+            self._setup_reference = charted_setups(self.opening)
+        item = asdict(state) if is_dataclass(state) else dict(state)
+        frame = _simulate_frame(item, self.context)
+        item["caller"] = frame.iloc[0]["caller"]
+        return setup_forecast(self._setup_reference, item, prediction)
 
     def outcome_distribution(self, state, call):
         """Reference outcomes conditional on a scrimmage call, pooled conservatively."""

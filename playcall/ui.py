@@ -171,6 +171,46 @@ def show_prediction(prediction):
     cols[1].metric("Pass probability", f"{prediction['p_pass']:.1%}")
     if prediction.get("selected_model"):
         st.caption(f"Selected model · {prediction['selected_model']}")
+    setups = prediction.get("setups", {})
+    if setups:
+        options = [
+            (option["weighted_share"], call, option)
+            for call, result in setups.items()
+            for option in result["options"]
+        ]
+        _, call, best = max(options, key=lambda item: item[0])
+        st.markdown(f"**Projected setup · {call.title()}**")
+        setup_cols = st.columns(3)
+        for column, label, field in zip(
+            setup_cols,
+            ("Personnel", "Formation", "Play concept family"),
+            ("personnel", "formation", "concept"),
+            strict=True,
+        ):
+            column.markdown(f"**{label}**  \n{best[field]}")
+        with st.expander("Other possible setups"):
+            st.dataframe(
+                [
+                    {
+                        "Call": family.title(),
+                        "Personnel": option["personnel"],
+                        "Formation": option["formation"],
+                        "Concept family": option["concept"],
+                        "Share within charted call": option["conditional_share"],
+                        "Matching plays": option["samples"],
+                    }
+                    for family, result in setups.items()
+                    for option in result["options"]
+                ],
+                hide_index=True,
+                column_config={
+                    "Share within charted call": st.column_config.NumberColumn(format="percent")
+                },
+            )
+            st.caption(
+                "Shares use historical plays with all three labels. The reference weighs Atlanta, "
+                "recent seasons and similar situations more heavily."
+            )
     uncertainty = prediction.get("uncertainty", {})
     interval = uncertainty.get("wilson95")
     if interval:

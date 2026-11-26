@@ -36,7 +36,7 @@ def _state_inputs(include_depth=True):
         away_rest, home_rest = ui.scheduled_rest(game_id)
         offense_rest = cols[0].number_input("Atlanta days of rest", 0, 24, value=away_rest)
         defense_rest = cols[1].number_input("Minnesota days of rest", 0, 24, value=home_rest)
-        depth = cols[2].slider("Plays to forecast", 1, 5, 3) if include_depth else 3
+        depth = cols[2].slider("Plays to forecast", 1, 6, 4) if include_depth else 3
     state = GameState(
         down=down,
         distance=min(distance, position),
@@ -120,10 +120,60 @@ def _tree(tree, path="opening"):
         _tree_node(tree["root"], path)
 
 
+def _likely_path(node, remaining):
+    """Choose a complete retained path. A pruned continuation is not an end of drive."""
+    if not node["children"]:
+        if remaining == 0 or node["state"]["drive_ended"]:
+            return node["mass"], []
+        return None
+    paths = []
+    for edge in node["children"]:
+        following = _likely_path(edge["node"], remaining - 1)
+        if following is not None:
+            mass, remainder = following
+            paths.append((mass, [(node, edge), *remainder]))
+    return max(paths, key=lambda item: item[0], default=None)
+
+
+def _drive_plan(tree):
+    projection = _likely_path(tree["root"], tree["depth"])
+    if not projection or not projection[1]:
+        return
+    mass, plays = projection
+    rows = []
+    for number, (node, edge) in enumerate(plays, start=1):
+        state = node["state"]
+        call = edge["call"]
+        setup = node["prediction"].get("setups", {}).get(call, {}).get("options", [])
+        best = setup[0] if setup else {}
+        rows.append(
+            {
+                "Snap": number,
+                "Down": state["down"],
+                "To gain": state["distance"],
+                "Call": call.title(),
+                "Personnel": best.get("personnel", "Unavailable"),
+                "Formation": best.get("formation", "Unavailable"),
+                "Concept family": best.get("concept", "Unavailable"),
+                "Simulated gain": edge["outcome"]["yards"],
+            }
+        )
+    st.dataframe(rows, hide_index=True)
+    st.caption(
+        f"Estimated path probability {mass:.2%}. Later snaps depend on earlier simulated gains. "
+        "The simulation covers eligible run/pass decisions. Kicks can be logged when they occur."
+    )
+
+
+def _show_live_page():
+    st.session_state["dashboard_page"] = "Live Prediction & Evaluation"
+
+
 def predictor():
     from playcall.simulation import freeze_forecast, opening_tree
 
-    st.caption("Change the pre-snap state to see updated opening-drive probabilities.")
+    st.caption("Explore Atlanta’s opening drive or switch to the live play log.")
+    st.button("Open live play log", on_click=_show_live_page)
     state, depth = _state_inputs()
     with st.expander("Update from the visible setup"):
         _observed_prediction(state)
@@ -134,6 +184,7 @@ def predictor():
     st.subheader("Next eligible play")
     ui.show_prediction(tree["root"]["prediction"])
     st.subheader("Opening-drive branches")
+    _drive_plan(tree)
     _tree(tree)
     game = ui.context()["game"]
     if datetime.now(UTC) >= datetime.fromisoformat(game["kickoff_utc"]):
@@ -372,7 +423,7 @@ def _chains(records, origin):
 
 
 def live():
-    from playcall.simulation import GameState, list_forecasts, record_adaptive
+    from playcall.simulation import GameState, list_forecasts, opening_tree, record_adaptive
 
     game = ui.context()["game"]
     rehearsal = datetime.now(UTC) < datetime.fromisoformat(game["kickoff_utc"])
@@ -442,9 +493,16 @@ def live():
     if state.drive_ended:
         st.info(f"Drive ended · {state.end_reason}")
         return
-    pending = state_record["forecast"]["root"]["prediction"] if state_record else None
+    tree = state_record["forecast"] if state_record else None
+    pending = tree["root"]["prediction"] if tree else None
+    if model is not None and (not pending or "setups" not in pending):
+        tree = opening_tree(model, state, depth=3)
+        pending = tree["root"]["prediction"]
     if pending:
         ui.show_prediction(pending)
+    if tree:
+        with st.expander("Updated drive scenario"):
+            _drive_plan(tree)
     with st.expander("Update from the visible setup"):
         _observed_prediction(state, [event["actual"]["call"] for event in events])
     if model is None:
@@ -452,8 +510,6 @@ def live():
             "Train a model from the cached data to record a play and generate the next adaptive forecast."
         )
         return
-    if pending is None:
-        ui.show_prediction(model.predict(state))
     with st.form("record-actual"):
         cols = st.columns(3)
         actual_call = cols[0].selectbox(
@@ -466,6 +522,13 @@ def live():
         elapsed = cols[2].number_input("Seconds elapsed", 0, available, min(30, available))
         result = st.radio(
             "Play result", ["Play continues", "Turnover", "Touchdown"], horizontal=True
+        )
+        st.caption("Optional · Enter the official next spot if a penalty or ruling changed it.")
+        cols = st.columns(3)
+        official = (
+            cols[0].number_input("Official next down", 1, 4, value=None),
+            cols[1].number_input("Official yards to gain", 1, 99, value=None),
+            cols[2].number_input("Official yards to goal", 1, 99, value=None),
         )
         submitted = st.form_submit_button("Record play and update", type="primary")
     if submitted:
@@ -481,6 +544,7 @@ def live():
                 touchdown=result == "Touchdown",
                 elapsed_seconds=elapsed,
                 parent_id=state_record["id"] if state_record else None,
+                official_next=official if any(value is not None for value in official) else None,
             )
         except (ValueError, RuntimeError, OSError) as error:
             st.error(str(error))

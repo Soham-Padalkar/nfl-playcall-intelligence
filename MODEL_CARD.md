@@ -1,5 +1,11 @@
 # Opening-drive model card
 
+## Personnel, formation and concept
+
+Each run/pass branch ranks historical combinations that were charted together. The estimate gives more influence to Atlanta, the verified playcaller, recent seasons and similar down, distance, field position and previous call. The concept-family labels use charted screens, play action, RPOs and target routes when available. Broad rush location and pass depth and direction supply other labels. Target routes identify the intended receiver's charted route and do not describe the full route combination. Plays missing a label do not contribute to the combination counts. The dashboard shows alternatives and separates the historical share of labeled setups from the model's run/pass probability.
+
+A chronological check built the setup reference from seasons through 2024 and evaluated Atlanta's 2025 opening drives. Among 81 plays with all three labels, and given the actual run/pass class, the top setup matched all three labels on 4 plays. One of the three displayed alternatives matched all three labels on 6 plays. These results are conditional on knowing the actual run/pass class. The complete tactical combination is uncertain even where a run/pass prediction is strong.
+
 ## Selected neural classifier
 
 The current classifier is a gated multilayer perceptron. The comparison trained a plain MLP, a residual MLP, a gated MLP and a GRU on the same 7,256 plays from 2022–23. They used the same pre-snap inputs, including personnel and earlier same-game calls. The GRU processed the last three calls as a sequence. The winner was selected on 3,556 plays from 2024 by accuracy, with log loss as a tie-breaker.
