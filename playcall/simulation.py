@@ -30,8 +30,10 @@ class GameState:
     drive_ended: bool = False
     end_reason: str | None = None
     caller: str | None = None
+    recent_calls: tuple[str, ...] = ()
 
     def __post_init__(self):
+        object.__setattr__(self, "recent_calls", tuple(self.recent_calls))
         if self.down not in range(1, 5) or self.distance not in range(1, 100):
             raise ValueError("Down must be 1–4 and distance must be 1–99 yards.")
         if self.yardline_100 not in range(1, 100):
@@ -74,6 +76,9 @@ def advance_state(
             reason = "turnover on downs"
         else:
             down, distance = state.down + 1, min(99, max(1, state.distance - yards))
+    recent = state.recent_calls or (
+        (state.previous_call,) if state.previous_call in {"run", "pass"} else ()
+    )
     return replace(
         state,
         down=down,
@@ -82,6 +87,7 @@ def advance_state(
         score_differential=score,
         game_seconds_remaining=clock,
         previous_call=call,
+        recent_calls=(*recent, call)[-3:] if call in {"run", "pass"} else recent,
         drive_ended=reason is not None,
         end_reason=reason,
     )
@@ -234,7 +240,7 @@ def record_adaptive(
         parent = next((record for record in records if record["id"] == parent_id), None)
         if parent is None:
             raise ValueError("The parent forecast must exist for the same game.")
-        if parent["state"] != state_before:
+        if GameState(**parent["state"]) != state:
             raise ValueError("The starting state must match the parent forecast.")
         prediction_before = parent["forecast"]["root"]["prediction"]
     following = advance_state(

@@ -219,6 +219,35 @@ def _neural_results():
 
 
 def laboratory():
+    neural_report = ui.ROOT / "docs" / "neural-selection.json"
+    if neural_report.is_file():
+        comparison = json.loads(neural_report.read_text(encoding="utf-8"))
+        st.subheader("Neural classifier comparison")
+        st.metric("Validation winner", comparison["selected"])
+        st.dataframe(
+            [
+                {
+                    "Architecture": name,
+                    "Validation accuracy": item["validation"]["accuracy"],
+                    "Held-out accuracy": item["test"]["accuracy"],
+                    "Held-out Atlanta accuracy": item["test_atlanta"]["accuracy"],
+                    "First snap without setup": item["test_first_snap_without_visible_setup"][
+                        "accuracy"
+                    ],
+                }
+                for name, item in comparison["candidates"].items()
+            ],
+            hide_index=True,
+            column_config={
+                label: st.column_config.NumberColumn(label, format="percent")
+                for label in (
+                    "Validation accuracy",
+                    "Held-out accuracy",
+                    "Held-out Atlanta accuracy",
+                    "First snap without setup",
+                )
+            },
+        )
     model = ui.get_model()
     if model:
         report = model.report
@@ -228,6 +257,7 @@ def laboratory():
         st.info("Train the local models to produce a chronological backtest report.")
         _neural_results()
         return
+    st.subheader("Archived tabular backtest")
     selected = report["selected_model"]
     metrics = report["metrics"]
     st.caption(
@@ -294,7 +324,7 @@ def laboratory():
             labels={"log_loss_increase": "Increase in log loss", "feature": "Feature"},
         )
         ui.figure(fig, height=max(310, len(features) * 25 + 95))
-    if model:
+    if model and not getattr(model, "neural_winner", None):
         from playcall.simulation import GameState
 
         st.subheader("Opening-state ensemble contributions")

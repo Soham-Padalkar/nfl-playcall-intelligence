@@ -86,7 +86,7 @@ def get_plays():
 
 
 @st.cache_resource(show_spinner="Loading the playcall model…", max_entries=2)
-def _model(path, signature):
+def _model(path, signature, neural_signature):
     from playcall.models import load_models
 
     return load_models(path)
@@ -95,7 +95,12 @@ def _model(path, signature):
 def get_model():
     if MODEL.is_file():
         try:
-            return _model(MODEL, MODEL.stat().st_mtime_ns)
+            neural = MODEL.with_name("neural-winner.json")
+            return _model(
+                MODEL,
+                MODEL.stat().st_mtime_ns,
+                neural.stat().st_mtime_ns if neural.is_file() else None,
+            )
         except (
             AttributeError,
             EOFError,

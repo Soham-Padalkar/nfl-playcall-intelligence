@@ -1,6 +1,19 @@
 # Opening-drive model card
 
-## Forecast from the visible setup
+## Selected neural classifier
+
+The current classifier is a gated multilayer perceptron. The comparison trained a plain MLP, a residual MLP, a gated MLP and a GRU on the same 7,256 plays from 2022–23. They used the same pre-snap inputs, including personnel and earlier same-game calls. The GRU processed the last three calls as a sequence. The winner was selected on 3,556 plays from 2024 by accuracy, with log loss as a tie-breaker.
+
+| Architecture | Validation accuracy | Accuracy on 5,700 later plays |
+| --- | ---: | ---: |
+| MLP | 73.82% | 71.89% |
+| Residual MLP | 73.57% | 72.53% |
+| Gated MLP | 73.85% | 72.00% |
+| GRU | 73.37% | 72.11% |
+
+The residual MLP led on the held-out games. Selecting it on that basis would make those games part of model selection. The gated MLP scored 76.61% on 124 Atlanta plays with archived inputs and 51.01% on the league's 894 first snaps with the visible setup hidden. That test still used the actual initial game state. The current classifier reads only what is available at inference. Simulated future snaps have simulated history and no observed setup. [Neural selection report](docs/neural-selection.json)
+
+## Earlier statistical comparison using the visible setup
 
 The pre-snap predictor uses down, distance, field position, quarterback alignment, offensive personnel, defensive personnel and the last three eligible run or pass calls by the same offense in the same game. It uses each archived call only for later plays. The evaluator considered adding defenders in the box, offensive backfield count and motion. Validation selected the configuration with alignment, personnel and play history. [FTN charting definitions](https://nflreadr.nflverse.com/articles/dictionary_ftn_charting.html)
 

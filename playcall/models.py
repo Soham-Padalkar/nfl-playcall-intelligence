@@ -527,6 +527,10 @@ class PlaycallModels:
         ].copy()
 
     def call_probabilities(self, state):
+        neural = getattr(self, "neural_winner", None)
+        if neural is not None:
+            p_pass = neural.predict_state(state)
+            return {"p_pass": p_pass, "p_run": 1 - p_pass, "selected_model": neural.name}
         frame = _simulate_frame(state, self.context)
         rates = self.rates.predict(frame)
         weight = self.report["ensemble_analog_weight"]
@@ -813,4 +817,12 @@ def fit_models(store, model_path=DEFAULT_MODEL_PATH, report_path=DEFAULT_REPORT_
 
 def load_models(path=DEFAULT_MODEL_PATH):
     """Load a checkpoint created locally by this project."""
-    return joblib.load(Path(path))
+    from playcall.neural_selection import MODEL, load_winner
+
+    path = Path(path)
+    model = joblib.load(path)
+    classifier = path.with_name(MODEL.name)
+    if classifier.is_file():
+        model.neural_winner = load_winner(classifier)
+        model.version = model.neural_winner.version
+    return model
